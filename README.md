@@ -1,2 +1,2 @@
 # Upme
-Effortless self-updates for your Java desktop applications
+Effortless self-updates for your Java desktop application
