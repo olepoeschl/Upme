@@ -8,6 +8,8 @@
     <artifactId>upme</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <name>upme</name>
+
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
