@@ -1,7 +1,7 @@
+![upme-logo](https://github.com/user-attachments/assets/ea2fad01-102a-4672-96e3-ac6544a11858)
+
 [![Build](https://github.com/olepoeschl/Upme/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/olepoeschl/Upme/actions/workflows/build.yml)
 [![Tests](https://github.com/olepoeschl/Upme/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/olepoeschl/Upme/actions/workflows/test.yml)
-
-![upme-banner](https://github.com/user-attachments/assets/7eca5929-4a40-413e-8321-662756381ca1)
 
 ... what exactly does Upme do?
 
