@@ -25,5 +25,5 @@
 ...
 
 ## Contributing
-Contributions in all forms are welcome. If you are not sure about something, open an issue first or comment on an existing one, if applicable. Feel free to submit a Pull Request as soon as you are ready.
+Contributions in all forms are welcome. If you are not sure about something, open an issue first or comment on an existing one, if applicable. Feel free to submit a pull request as soon as you are ready.
 Thank you.
