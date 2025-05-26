@@ -1,8 +1,10 @@
+<!-- Logo and description -->
 <div align="center">
     <img src="https://github.com/user-attachments/assets/8de39442-70e1-4f33-b5e9-873211afd678"/>
     <h3 align="center">Effortless self-updates for your Java desktop application</h3>
 </div>
 
+<!-- Badges -->
 ---
 
 <div align="center">
@@ -13,8 +15,8 @@
 
 ---
 
-<br>
-... what exactly does Upme do?
+<!-- What is Upme? -->
+...
 
 ## Why was Upme created?
 ...
