@@ -1,4 +1,4 @@
-![upme-logo](https://github.com/user-attachments/assets/ea2fad01-102a-4672-96e3-ac6544a11858)
+![upme-logo](https://github.com/user-attachments/assets/204c0e09-65af-4a1c-b642-87f711a8ea2c)
 
 [![Build](https://github.com/olepoeschl/Upme/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/olepoeschl/Upme/actions/workflows/build.yml)
 [![Tests](https://github.com/olepoeschl/Upme/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/olepoeschl/Upme/actions/workflows/test.yml)
