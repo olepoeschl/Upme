@@ -1,14 +1,8 @@
-# Compiled class file
-*.class
+# location of compiler output
+/target/
 
 # Log file
 *.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
