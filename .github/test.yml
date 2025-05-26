@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  verify:
+  test_and_verify:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
