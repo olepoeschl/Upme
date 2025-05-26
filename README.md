@@ -1,8 +1,19 @@
-![upme-logo](https://github.com/user-attachments/assets/204c0e09-65af-4a1c-b642-87f711a8ea2c)
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/8de39442-70e1-4f33-b5e9-873211afd678"/>
+    <h3 align="center">Effortless self-updates for your Java desktop application</h3>
+</div>
 
-[![Build](https://github.com/olepoeschl/Upme/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/olepoeschl/Upme/actions/workflows/build.yml)
-[![Tests](https://github.com/olepoeschl/Upme/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/olepoeschl/Upme/actions/workflows/test.yml)
+---
 
+<div align="center">
+    <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
+    <img alt="Build Status Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/build.yml/badge.svg?branch=main"/>
+    <img alt="Test Status Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/test.yml/badge.svg?branch=main"/>
+</div>
+
+---
+
+<br>
 ... what exactly does Upme do?
 
 ## Why was Upme created?
