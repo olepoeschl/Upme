@@ -5,9 +5,11 @@
 </div>
 
 <!-- Badges -->
+
 ---
 
 <div align="center">
+    <img alt="License Badge" src="https://img.shields.io/badge/Status-Work in progress-yellow"/>
     <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
     <img alt="Build Status Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/build.yml/badge.svg?branch=main"/>
     <img alt="Test Status Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/test.yml/badge.svg?branch=main"/>
@@ -16,7 +18,7 @@
 ---
 
 <!-- What is Upme? -->
-Work in progress
+Upme adds self-update functionality to your Java desktop application with minimal effort. It aims to be simple to use, easy to integrate, yet flexible and extensible.
 
 <!-- ## Why was Upme created? -->
 
