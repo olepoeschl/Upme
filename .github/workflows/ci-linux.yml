@@ -1,4 +1,4 @@
-name: CI
+name: linux
 
 on:
   push:
@@ -10,10 +10,7 @@ on:
 
 jobs:
   test_and_verify:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -24,15 +21,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '24'
+          cache: 'maven'
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-            
       - name: Build, execute unit tests, package, execute integration tests
         run: mvn --batch-mode verify
-        
