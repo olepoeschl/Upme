@@ -19,7 +19,8 @@
 ---
 
 <!-- What is Upme? -->
-Upme adds self-update functionality to your Java desktop application with minimal effort. It aims to be easy to integrate, extensible and flexible.
+Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-use library to add self-update capabilities to desktop apps?
+<br>Me too - that's why I create Upme. Its main goals are ease of use, extensibility and flexibility.
 
 <!-- ## Why was Upme created? -->
 
