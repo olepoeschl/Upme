@@ -20,7 +20,7 @@
 
 <!-- What is Upme? -->
 Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-use library to add self-update capabilities to desktop apps?
-<br>Me too - that's why I create Upme. Its main goals are ease of use, extensibility and flexibility.
+<br>Me too - that's why I create Upme. Its main goals are ease of use, extensibility and robustness.
 
 <!-- ## Why was Upme created? -->
 
