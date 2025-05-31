@@ -2,7 +2,7 @@
 <div align="center">
     <img src="https://github.com/user-attachments/assets/8de39442-70e1-4f33-b5e9-873211afd678"/>
     <!--h3 align="center">Effortless self-updates for Java desktop applications</h3-->
-    <!--h3 align="center">Simple and robust</h3-->
+    <h3 align="center">...because Java desktop development isn't dead</h3>
 </div>
 
 <!-- Badges -->
