@@ -38,7 +38,8 @@ Upme breaks the update process down into a clear, three-stage pipeline. The diag
 * **PackageProvider:** Retrieves the actual update package, whether from a remote server or local storage.
 * **PackageApplier:** Applies the downloaded update package to your application, handling different update strategies like full replacement or patching.
 
-... more details or examples for each component, or move to installation instructions
+...more details coming soon
+<!--... more details or examples for each component, or move to installation instructions-->
 
 
 <!--
