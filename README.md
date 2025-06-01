@@ -30,7 +30,7 @@ Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-us
 
 
 ## How it works
-Upme breaks the update process down into a clear, three-stage pipeline. The diagram below illustrates the high-level architecture:
+Upme breaks the update process down into three stages. The diagram below illustrates the high-level architecture:
 
 ![Upme Core Workflow](docs/target/c2.png)
 
