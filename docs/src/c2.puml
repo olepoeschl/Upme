@@ -12,6 +12,6 @@ old --> resolver : "packages\nsource\nURL / path"
 resolver ...> old : "available\npackages\nwith\nURLs / paths"
 old -right-> provider : "package URL / path"
 provider -right-> applier : "local package file"
-applier --> new
+applier --> new : "restart\napplication"
 
 @enduml
