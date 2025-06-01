@@ -25,10 +25,10 @@ Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-us
 
 <!-- ## Getting started -->
 
-<-- ## Example project -->
+<!-- ## Example project -->
 <!-- link a separate repository as a working example -->
 
-<-- ## How it works -->
+<!-- ## How it works -->
 
 <!--
 ## Contributing
