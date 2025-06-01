@@ -1,0 +1,17 @@
+@startuml
+
+skinparam backgroundColor transparent
+
+[PackageResolver] as resolver
+[PackageProvider] as provider
+[PackageApplier] as applier
+() "your application\n(old version)" as old
+() "your application\n(new version)" as new
+
+old -left---> resolver : "packages\nsource\nURL"
+resolver -----> old : "available\npackages\nwith URLs"
+old -right-> provider : "package URL"
+provider -right-> applier : "local package file"
+applier -right-> new
+
+@enduml
