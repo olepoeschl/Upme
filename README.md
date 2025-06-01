@@ -23,6 +23,7 @@ Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-us
 <br>Me too - that's why I create Upme. Its main goals are ease of use, extensibility and robustness.
 
 <!-- ## Getting started -->
+<!-- How to use Upme in your project, with code snippets -->
 
 <!-- ## Example project -->
 <!-- link a separate repository as a working example -->
