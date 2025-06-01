@@ -1,13 +1,11 @@
 <!-- Logo and description -->
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/31b4407c-f94e-41c1-b8d3-a1589e797d7f"/>
+    <img src="https://github.com/user-attachments/assets/5308385b-8846-46ed-9c0c-5dea107db3fd"/>
     <!--h3 align="center">Effortless self-updates for Java desktop applications</h3-->
     <h3 align="center">...because Java desktop development isn't dead</h3>
 </div>
 
-
 <!-- Badges -->
-
 ---
 
 <div align="center">
