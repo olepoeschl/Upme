@@ -29,6 +29,7 @@ Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-us
 <!-- link a separate repository as a working example -->
 
 <!-- ## How it works -->
+<!-- Explain the steps of the update process, e.g. using a diagram. Then explain additional, important details -->
 
 <!--
 ## Contributing
