@@ -1,13 +1,11 @@
 <!-- Logo and description -->
 <div align="center">
     <img src="https://github.com/user-attachments/assets/5308385b-8846-46ed-9c0c-5dea107db3fd"/>
-    <!--h3 align="center">Effortless self-updates for Java desktop applications</h3-->
-    <h3 align="center">...because Java desktop development isn't dead</h3>
+    <!--h3 align="center">...because Java desktop development isn't dead</h3-->
 </div>
 
 <!-- Badges -->
----
-
+<br>
 <div align="center">
     <img alt="Status Badge" src="https://img.shields.io/badge/Status-Design phase-yellow"/>
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-windows.yml/badge.svg?branch=main"/>
@@ -16,13 +14,9 @@
     <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
 </div>
 
----
+__Upme__ is a simple library to add self-update capabilities to Java desktop applications. Its main goals are ease of use, extensibility and robustness.
 
-<!-- What is Upme? -->
-Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-use library to add self-update capabilities to desktop apps?
-<br>Me too - that's why I create Upme. Its main goals are ease of use, extensibility and robustness.
-
-Features:
+## Features
 - [ ] archive-based updates
     - [ ] keep important application files, e.g. user data
     - [ ] optional restart after the update
