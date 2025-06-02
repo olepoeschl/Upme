@@ -14,6 +14,8 @@
     <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
 </div>
 
+![Flow diagram](docs/target/flow.png)
+
 __Upme__ is a simple library to add self-update capabilities to Java desktop applications. Its main goals are ease of use, extensibility and robustness.
 
 ## Features
