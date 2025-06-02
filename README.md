@@ -13,6 +13,7 @@
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-macos.yml/badge.svg?branch=main"/>
     <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
 </div>
+<h2></h2>
 
 ![Flow diagram](docs/target/flow.png)
 
