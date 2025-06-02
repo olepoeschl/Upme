@@ -22,25 +22,31 @@
 Ever wondered why the entire Java ecosystem doesn't provide a single ready-to-use library to add self-update capabilities to desktop apps?
 <br>Me too - that's why I create Upme. Its main goals are ease of use, extensibility and robustness.
 
+Features:
+- [ ] archive-based updates
+    - [ ] keep important application files, e.g. user data
+    - [ ] optional restart after the update
+    - [ ] rollback on error
+    - [ ] create log file
+    - [ ] cleanup temporary files
+    - [ ] automatically ask for admin permissions if needed
+    - [ ] full replacement of all application files
+    - [ ] incremental patch based on changes
+- [ ] installer-based updates
+- [ ] fetch updates from custom web server
+- [ ] fetch updates from Github Releases
+
 <!--## Getting started-->
 <!-- How to use Upme in your project, with code snippets -->
 
 <!-- ## Example project -->
 <!-- link a separate repository as a working example -->
 
-
+<!--
 ## How it works
 Upme breaks the update process down into three stages. The diagram below illustrates the high-level architecture:
-
-![Upme Core Workflow](docs/target/c2.png)
-
-* **PackageResolver:** Identifies the update packages available for your application.
-* **PackageProvider:** Retrieves the actual update package, whether from a remote server or local storage.
-* **PackageApplier:** Applies the downloaded update package to your application, handling different update strategies like full replacement or patching.
-
-...more details coming soon
-<!--... more details or examples for each component, or move to installation instructions-->
-
+<br>![Upme Core Workflow](docs/target/c2.png)
+-->
 
 <!--
 ## Contributing
