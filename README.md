@@ -17,8 +17,8 @@
 
 ![Components and flow diagram](docs/target/flow.png)
 
-__Upme__ is a straight-forward library to add self-update capabilities to Java desktop applications. Its main goals are ease of use, extensibility and robustness.
-While the diagram above shows a simplified use-case, the library also provides more low-level control.
+__Upme__ is a simple library to add self-update capabilities to Java desktop applications. Its main goals are ease of use, extensibility and robustness.
+While the diagram above shows a common, but very simple use-case, the library also provides more low-level control.
 
 ## Features
 - [ ] super high-level wrapper for the average use-case: update to the latest version
