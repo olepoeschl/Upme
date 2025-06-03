@@ -21,6 +21,7 @@ __Upme__ is a simple library to add self-update capabilities to Java desktop app
 While the diagram above shows a simplified use-case, the library also provides more low-level control.
 
 ## Features
+- [ ] super high-level wrapper for the average use-case: update to the latest version
 - [ ] archive-based updates
     - [ ] keep important application files, e.g. user data
     - [ ] optional restart after the update
