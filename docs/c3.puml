@@ -1,0 +1,19 @@
+@startuml
+skinparam backgroundColor transparent
+skinparam linetype ortho // orthogonal lines for cleaner routing
+'left to right direction
+
+component "Upme" as upme {
+    [UpdateResolver\n(checks for updates)] as resolver
+    [UpdateProvider\n(downloads the update)] as provider
+    [UpdateApplier\n(applies the update)] as applier
+}
+node "Your application \n(outdated)" as old_app #dd5555
+node "Your application \n(new version)" as new_app #55dd55
+
+old_app -right-> upme : " specify update server\nURL and current\napplication version"
+resolver -right-> provider : "if update available, \npass the download URL"
+provider -right-> applier : "pass the path to the \ndownloaded file"
+upme --> new_app : " restart"
+
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+skinparam backgroundColor transparent
+'skinparam linetype ortho // orthogonal lines for cleaner routing
+
+component "Upme\n(check for update, download and apply it)" as upme
+node "Your application \n(outdated)" as old_app #dd5555
+node "Your application \n(new version)" as new_app #55dd55
+
+old_app -right-> upme: "specify update server\nURL and current\napplication version"
+upme -right-> new_app : "restart"
+
+@enduml
