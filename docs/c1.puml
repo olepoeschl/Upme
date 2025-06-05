@@ -2,7 +2,7 @@
 skinparam backgroundColor transparent
 'skinparam linetype ortho // orthogonal lines for cleaner routing
 
-component "Upme\n(check for update, download and apply it)" as upme
+component "**Upme**\n(check for update, download and apply it)" as upme
 node "Your application \n(outdated)" as old_app #dd5555
 node "Your application \n(new version)" as new_app #55dd55
 
