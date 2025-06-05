@@ -15,7 +15,9 @@
 </div>
 <h2></h2>
 
-![Components and flow diagram](https://github.com/user-attachments/assets/92994649-0ce0-441a-82c9-1730c7d28ea5)
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/9e0eab34-2d36-42c7-b4f4-b7aa9dbe1a4f"/>
+</div>
 
 __Upme__ is a simple library to add self-update capabilities to Java desktop applications. Its main goals are ease of use, extensibility and robustness.
 While the diagram above shows a common, but very simple use-case, the library also provides more low-level control.
