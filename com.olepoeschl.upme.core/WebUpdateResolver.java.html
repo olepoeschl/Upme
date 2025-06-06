@@ -3,6 +3,7 @@
 import org.jspecify.annotations.NullMarked;
 
 import java.net.http.HttpClient;
+import java.util.List;
 import java.util.Objects;
 
 @NullMarked
@@ -11,17 +12,23 @@ public class WebUpdateResolver implements UpdateResolver {
     private final String url;
     private final HttpClient httpClient;
 
-<span class="fc" id="L14">    public WebUpdateResolver(String url, HttpClient httpClient) {</span>
-<span class="fc" id="L15">        this.url = Objects.requireNonNull(url, &quot;url must not be null&quot;);</span>
-<span class="fc" id="L16">        this.httpClient = Objects.requireNonNull(httpClient, &quot;httpClient must not be null&quot;);</span>
-<span class="fc" id="L17">    }</span>
+<span class="fc" id="L15">    public WebUpdateResolver(String url, HttpClient httpClient) {</span>
+<span class="fc" id="L16">        this.url = Objects.requireNonNull(url, &quot;url must not be null&quot;);</span>
+<span class="fc" id="L17">        this.httpClient = Objects.requireNonNull(httpClient, &quot;httpClient must not be null&quot;);</span>
+<span class="fc" id="L18">    }</span>
 
     public String getUrl() {
-<span class="fc" id="L20">        return url;</span>
+<span class="fc" id="L21">        return url;</span>
     }
 
     public HttpClient getHttpClient() {
-<span class="fc" id="L24">        return httpClient;</span>
+<span class="fc" id="L25">        return httpClient;</span>
+    }
+
+    @Override
+    public List&lt;UpdateInfo&gt; checkForUpdates() {
+        // TODO
+<span class="nc" id="L31">        return List.of();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

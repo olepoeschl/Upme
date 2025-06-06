@@ -1,2 +1,3 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-upme,com.olepoeschl.upme.core,WebUpdateResolver,0,21,0,0,0,6,0,3,0,3
+upme,com.olepoeschl.upme.core,UpdateResolver.UpdateInfo,24,0,0,0,5,0,1,0,1,0
+upme,com.olepoeschl.upme.core,WebUpdateResolver,2,21,0,0,1,6,1,3,1,3
