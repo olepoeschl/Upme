@@ -1,37 +1,30 @@
 package com.olepoeschl.upme.core;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.net.http.HttpClient;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WebUpdateResolverTest {
 
-    @Test
-    void givenValidArgs_whenConstructor_thenCreatesInstanceWithInjectedArgs()  {
-        try (HttpClient injectedClient = HttpClient.newHttpClient()) {
-            var resolver = new WebUpdateResolver("some_url", injectedClient);
-            assertEquals("some_url", resolver.getUrl());
-            assertSame(injectedClient, resolver.getHttpClient());
+    @Nested
+    class Constructor {
+        @Test
+        void givenValidArgs_thenGettersReturnTheirValues() {
+            try (HttpClient injectedClient = HttpClient.newHttpClient()) {
+                var resolver = new WebUpdateResolver("some_url", injectedClient);
+                assertEquals("some_url", resolver.getUrl());
+                assertSame(injectedClient, resolver.getHttpClient());
+            }
+        }
+        @Test
+        void givenNullArgs_thenThrowNullPointerException() {
+            assertThrows(NullPointerException.class, () -> new WebUpdateResolver(null, HttpClient.newHttpClient()));
+            assertThrows(NullPointerException.class, () -> new WebUpdateResolver("some_url", null));
+            assertThrows(NullPointerException.class, () -> new WebUpdateResolver(null, null));
         }
     }
-
-    @Test
-    void givenNullArgs_whenConstructor_thenThrowsException() {
-        try {
-            new WebUpdateResolver(null, null);
-        } catch (NullPointerException e) {
-            assertEquals("url must not be null", e.getMessage());
-        }
-
-        try {
-            new WebUpdateResolver("some_url", null);
-        } catch (NullPointerException e) {
-            assertEquals("httpClient must not be null", e.getMessage());
-        }
-    }
-
 
 }

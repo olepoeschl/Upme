@@ -3,6 +3,7 @@ package com.olepoeschl.upme.core;
 import org.jspecify.annotations.NullMarked;
 
 import java.net.http.HttpClient;
+import java.util.Objects;
 
 @NullMarked
 public class WebUpdateResolver implements UpdateResolver {
@@ -11,8 +12,8 @@ public class WebUpdateResolver implements UpdateResolver {
     private final HttpClient httpClient;
 
     public WebUpdateResolver(String url, HttpClient httpClient) {
-        this.url = url;
-        this.httpClient = httpClient;
+        this.url = Objects.requireNonNull(url, "url must not be null");
+        this.httpClient = Objects.requireNonNull(httpClient, "httpClient must not be null");
     }
 
     public String getUrl() {
