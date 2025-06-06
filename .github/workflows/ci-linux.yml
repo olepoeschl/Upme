@@ -11,6 +11,8 @@ on:
 jobs:
   test_and_verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # for deploying the coverage badge
 
     steps:
       - name: Checkout code
