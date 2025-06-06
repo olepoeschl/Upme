@@ -11,12 +11,11 @@
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-windows.yml/badge.svg?branch=main"/>
     <img alt="Linux CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-linux.yml/badge.svg?branch=main"/>
     <img alt="Macos CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-macos.yml/badge.svg?branch=main"/>
-    <!-- -->
+    <img alt="Coverage Badge" src="https://github.com/olepoeschl/Upme/blob/gh-pages/badges/jacoco.svg"/>
     <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
 </div>
 <h2></h2>
 
-[![Test Coverage](https://cdn.hackernoon.com/images/2hVuiN1gfbdO9OXUxjCttPNETq73-2022-08-08T22:19:48.257Z-cl6lbgrz6002p0as65v8sfgja)](https://olepoeschl.github.io/Upme/)
 
 <div align="center">
     <img src="https://github.com/user-attachments/assets/611c9892-cd4d-48e7-9f0d-d43b8256deeb"/>
