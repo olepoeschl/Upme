@@ -1,7 +1,10 @@
 package com.olepoeschl.upme.core;
 
+import org.jspecify.annotations.NullMarked;
+
 import java.net.http.HttpClient;
 
+@NullMarked
 public class WebUpdateResolver implements UpdateResolver {
 
     private final String url;
