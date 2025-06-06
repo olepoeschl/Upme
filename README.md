@@ -7,7 +7,7 @@
 <!-- Badges -->
 <br>
 <div align="center">
-    <img alt="Status Badge" src="https://img.shields.io/badge/Status-Design phase-yellow"/>
+    <img alt="Status Badge" src="https://img.shields.io/badge/Status-Initial development-yellow"/>
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-windows.yml/badge.svg?branch=main"/>
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-linux.yml/badge.svg?branch=main"/>
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-macos.yml/badge.svg?branch=main"/>
