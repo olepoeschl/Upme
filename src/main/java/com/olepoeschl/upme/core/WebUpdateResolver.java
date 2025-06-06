@@ -3,6 +3,7 @@ package com.olepoeschl.upme.core;
 import org.jspecify.annotations.NullMarked;
 
 import java.net.http.HttpClient;
+import java.util.List;
 import java.util.Objects;
 
 @NullMarked
@@ -22,5 +23,11 @@ public class WebUpdateResolver implements UpdateResolver {
 
     public HttpClient getHttpClient() {
         return httpClient;
+    }
+
+    @Override
+    public List<UpdateInfo> checkForUpdates() {
+        // TODO
+        return List.of();
     }
 }
