@@ -11,7 +11,7 @@
     <img alt="Windows CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-windows.yml/badge.svg?branch=main"/>
     <img alt="Linux CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-linux.yml/badge.svg?branch=main"/>
     <img alt="Macos CI Badge" src="https://github.com/olepoeschl/Upme/actions/workflows/ci-macos.yml/badge.svg?branch=main"/>
-    <img alt="Coverage Badge" src="https://github.com/olepoeschl/Upme/blob/gh-pages/badges/jacoco.svg"/>
+    <a href="https://olepoeschl.github.io/Upme/"><img alt="Coverage Badge" src="https://github.com/olepoeschl/Upme/blob/gh-pages/badges/jacoco.svg"/></a>
     <img alt="License Badge" src="https://img.shields.io/badge/License-MIT-blue"/>
 </div>
 <h2></h2>
