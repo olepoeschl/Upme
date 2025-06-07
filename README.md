@@ -16,9 +16,8 @@
 </div>
 <h2></h2>
 
-
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/611c9892-cd4d-48e7-9f0d-d43b8256deeb"/>
+    <img src="https://github.com/user-attachments/assets/5d39fc59-2bf7-43dd-834f-e6ad122e46ae"/>
 </div>
 
 
