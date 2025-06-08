@@ -29,6 +29,7 @@ jobs:
         run: mvn --batch-mode verify
 
       - name: Generate Code Coverage Badge
+        if: always()
         uses: cicirello/jacoco-badge-generator@v2.12.0
         with:
           jacoco-csv-file: target/site/jacoco/jacoco.csv
@@ -36,5 +37,6 @@ jobs:
 
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
+        if: always()
         with:
           folder: target/site/jacoco
