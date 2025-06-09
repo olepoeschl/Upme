@@ -1,4 +1,4 @@
-package com.olepoeschl.upme.core;
+package com.olepoeschl.upme;
 
 import org.jspecify.annotations.NullMarked;
 
