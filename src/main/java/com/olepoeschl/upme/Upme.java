@@ -1,7 +1,6 @@
 package com.olepoeschl.upme;
 
 import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -10,7 +9,7 @@ public final class Upme {
 
     private static UpdateManager updateManager = new UpdateManager() {
         @Override
-        public void initialize(@Nullable String currentVersion, String updateServerUrl) {}
+        public void initialize(String currentVersion, String updateServerUrl) {}
         @Override
         public boolean possible() {
             return false;
@@ -27,7 +26,7 @@ public final class Upme {
         return updateManager;
     }
 
-    public static void initialize(@Nullable String currentVersion, String updateServerUrl) {
+    public static void initialize(String currentVersion, String updateServerUrl) {
         updateManager.initialize(currentVersion, updateServerUrl);
     }
 
