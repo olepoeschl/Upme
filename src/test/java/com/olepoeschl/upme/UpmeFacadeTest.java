@@ -1,5 +1,6 @@
 package com.olepoeschl.upme;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +17,7 @@ public class UpmeFacadeTest {
         void givenValidUpdateManager_thenUpdateManagerIsSet() {
             var mockUpdateManager = new UpdateManager() {
                 @Override
-                public void initialize(String currentVersion, String updateServerUrl) {}
+                public void initialize(@Nullable String currentVersion, String updateServerUrl) {}
                 @Override
                 public boolean possible() {
                     return false;

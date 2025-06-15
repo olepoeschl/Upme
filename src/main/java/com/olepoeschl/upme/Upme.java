@@ -10,7 +10,7 @@ public final class Upme {
 
     private static UpdateManager updateManager = new UpdateManager() {
         @Override
-        public void initialize(String currentVersion, String updateServerUrl) {}
+        public void initialize(@Nullable String currentVersion, String updateServerUrl) {}
         @Override
         public boolean possible() {
             return false;
