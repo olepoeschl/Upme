@@ -44,7 +44,7 @@ public class UpmeFacadeTest {
     @Nested
     class ForwardMethodCallsToUpdateManager {
         @Test
-        void whenInitializeCalled_thenForwardToUpdateManager() {
+        void forwardInitialize() {
             var mockUpdateManager = mock(UpdateManager.class);
             Upme.setUpdateManager(mockUpdateManager);
             Upme.initialize("current_version", "update.server.url");
@@ -52,7 +52,7 @@ public class UpmeFacadeTest {
         }
 
         @Test
-        void whenPossibleCalled_thenForwardToUpdateManager() {
+        void forwardPossible() {
             var mockUpdateManager = mock(UpdateManager.class);
             when(mockUpdateManager.possible()).thenReturn(true);
             Upme.setUpdateManager(mockUpdateManager);
@@ -61,7 +61,7 @@ public class UpmeFacadeTest {
         }
 
         @Test
-        void whenNowCalled_thenForwardToUpdateManager() {
+        void forwardNow() {
             var mockUpdateManager = mock(UpdateManager.class);
             Upme.setUpdateManager(mockUpdateManager);
             Upme.now();
