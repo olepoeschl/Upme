@@ -14,16 +14,7 @@ public class UpmeFacadeTest {
     class SetAndGetUpdateManager {
         @Test
         void givenValidUpdateManager_thenUpdateManagerIsSet() {
-            var mockUpdateManager = new UpdateManager() {
-                @Override
-                public void initialize(String currentVersion, String updateServerUrl) {}
-                @Override
-                public boolean possible() {
-                    return false;
-                }
-                @Override
-                public void now() {}
-            };
+            var mockUpdateManager = new UpdateManager();
             Upme.setUpdateManager(mockUpdateManager);
             assertSame(mockUpdateManager, Upme.getUpdateManager());
         }

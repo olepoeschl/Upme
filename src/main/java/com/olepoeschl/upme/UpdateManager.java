@@ -1,11 +1,17 @@
 package com.olepoeschl.upme;
 
-public interface UpdateManager {
+public class UpdateManager {
 
-    void initialize(String currentVersion, String updateServerUrl);
+    void initialize(String currentVersion, String updateServerUrl) {
 
-    boolean possible();
+    }
 
-    void now();
+    boolean possible() {
+        return false;
+    }
+
+    void now() {
+
+    }
 
 }

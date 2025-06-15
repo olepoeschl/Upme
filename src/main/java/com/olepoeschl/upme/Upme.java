@@ -7,16 +7,7 @@ import java.util.Objects;
 @NullMarked
 public final class Upme {
 
-    private static UpdateManager updateManager = new UpdateManager() {
-        @Override
-        public void initialize(String currentVersion, String updateServerUrl) {}
-        @Override
-        public boolean possible() {
-            return false;
-        }
-        @Override
-        public void now() {}
-    };
+    private static UpdateManager updateManager = new UpdateManager();
 
     public static void setUpdateManager(UpdateManager updateManager) {
         Upme.updateManager = Objects.requireNonNull(updateManager);
