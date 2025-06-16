@@ -85,9 +85,9 @@
                 <configuration>
                     <argLine>
                         ${jacoco.agent.argLine}
-                        -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
+                        -javaagent:"${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar"="inline"
                         -Xshare:off
-                        -Dnet.bytebuddy.safe=true <!--disable ByteBuddy's unsafe operations to evade annoying jvm warnings-->
+                        -Dnet.bytebuddy.safe=true
                     </argLine>
                 </configuration>
             </plugin>
