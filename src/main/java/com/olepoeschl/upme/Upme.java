@@ -10,7 +10,7 @@ public final class Upme {
     private static UpdateManager updateManager = new UpdateManager();
 
     public static void setUpdateManager(UpdateManager updateManager) {
-        Upme.updateManager = Objects.requireNonNull(updateManager);
+        Upme.updateManager = Objects.requireNonNull(updateManager, "updateManager must not be null");
     }
 
     public static UpdateManager getUpdateManager() {
