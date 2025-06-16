@@ -27,7 +27,7 @@ public final class Upme {
      * @param updateManager the custom UpdateManager instance to use
      */
     public static void setUpdateManager(UpdateManager updateManager) {
-        Upme.updateManager = Objects.requireNonNull(updateManager);
+        Upme.updateManager = Objects.requireNonNull(updateManager, "updateManager must not be null");
     }
 
     /**
