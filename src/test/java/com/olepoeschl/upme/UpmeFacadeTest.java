@@ -14,7 +14,7 @@ public class UpmeFacadeTest {
     class SetAndGetUpdateManager {
         @Test
         void givenValidUpdateManager_thenUpdateManagerIsSet() {
-            var mockUpdateManager = new UpdateManager();
+            var mockUpdateManager = new UpdateManager(null, null, null);
             Upme.setUpdateManager(mockUpdateManager);
             assertSame(mockUpdateManager, Upme.getUpdateManager());
         }

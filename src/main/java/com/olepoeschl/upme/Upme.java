@@ -19,7 +19,7 @@ import java.util.Objects;
 @NullMarked
 public final class Upme {
 
-    private static UpdateManager updateManager = new UpdateManager();
+    private static UpdateManager updateManager = new UpdateManager(null, null, null);
 
     /**
      * Sets a custom {@link UpdateManager} instance. This is optional; if not set, a default instance will be used.
