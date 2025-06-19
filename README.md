@@ -27,13 +27,12 @@ While the diagram above shows a common, but very simple use-case, the library al
 ## Features
 - [ ] high-level wrapper for the average use-case of updating to the latest version
 - [ ] archive-based full-replacement updates
-    - [ ] configure which files to preserve during update
-    - [ ] configurable strategy for restarting after the update (where is the main jar-file?)
-    - [ ] rollback on error
-    - [ ] create log file
-    - [ ] method for cleaning up temporary files
-    - [ ] automatically elevate permissions permissions if needed
-- [ ] installer-based updates
+- [ ] configure which files to preserve during update
+- [ ] configurable strategy for restarting after the update (where is the main jar-file?)
+- [ ] rollback on error
+- [ ] create log file
+- [ ] method for cleaning up temporary files
+- [ ] automatically elevate permissions permissions if needed
 - [ ] select desired new version out of a list of available updates
 - [ ] fetch updates from custom web server
 - [ ] fetch updates from Github Releases
