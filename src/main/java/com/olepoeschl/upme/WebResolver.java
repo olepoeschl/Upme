@@ -2,6 +2,7 @@ package com.olepoeschl.upme;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jspecify.annotations.NullMarked;
 import org.semver4j.Semver;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
+@NullMarked
 public record WebResolver(String url) implements UpdateResolver {
 
     private static final ObjectMapper mapper = new ObjectMapper();
