@@ -4,20 +4,21 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import java.util.Objects;
 
+// TODO: javadoc
 @NullMarked
-<span class="fc" id="L8">public record Version(String versionString, String downloadUrl, String description, @Nullable String checksumSha3256) {</span>
+<span class="fc" id="L9">public record Version(String versionString, String downloadUrl, String description, @Nullable String checksumSha3256) {</span>
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (this == o) return true;</span>
-<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (!(o instanceof Version other)) return false;</span>
-<span class="fc bfc" id="L14" title="All 2 branches covered.">        return Objects.equals(versionString, other.versionString)</span>
-<span class="fc bfc" id="L15" title="All 2 branches covered.">                &amp;&amp; Objects.equals(checksumSha3256, other.checksumSha3256);</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">        if (!(o instanceof Version other)) return false;</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        return Objects.equals(versionString, other.versionString)</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">                &amp;&amp; Objects.equals(checksumSha3256, other.checksumSha3256);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L20">        return Objects.hash(versionString, checksumSha3256);</span>
+<span class="fc" id="L21">        return Objects.hash(versionString, checksumSha3256);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

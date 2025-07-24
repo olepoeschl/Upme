@@ -11,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-// TODO: documentation
+// TODO: javadoc
 public class WebResolver implements UpdateResolver {
 
     private final String url;
