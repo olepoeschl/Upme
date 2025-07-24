@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArchiveBasedUpdater.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">upme</a> &gt; <a href="index.source.html" class="el_package">com.olepoeschl.upme</a> &gt; <span class="el_source">ArchiveBasedUpdater.java</span></div><h1>ArchiveBasedUpdater.java</h1><pre class="source lang-java linenums">package com.olepoeschl.upme;
+
+import org.jspecify.annotations.NullMarked;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.function.Consumer;
+
+@NullMarked
+public class ArchiveBasedUpdater implements Updater {
+
+    private final String currentVersionString;
+    private final UpdateResolver resolver;
+    private final UpdateDownloader downloader;
+    private final ArchiveUnpacker unpacker;
+
+    private Map&lt;String, UpdateStrategy&gt; preparedUpdates;
+
+<span class="nc" id="L20">    public ArchiveBasedUpdater(String currentVersionString, UpdateResolver resolver, UpdateDownloader downloader, ArchiveUnpacker unpacker) {</span>
+<span class="nc" id="L21">        this.currentVersionString = currentVersionString;</span>
+<span class="nc" id="L22">        this.resolver = resolver;</span>
+<span class="nc" id="L23">        this.downloader = downloader;</span>
+<span class="nc" id="L24">        this.unpacker = unpacker;</span>
+<span class="nc" id="L25">    }</span>
+
+    @Override
+    public Version[] checkAvailableUpdates() throws IOException {
+<span class="nc" id="L29">        return resolver.checkAvailableUpdates(currentVersionString);</span>
+    }
+
+    @Override
+    public void prepareUpdate(Version version, Consumer&lt;Float&gt; progressCallback) {
+<span class="nc" id="L34">        Path updateArchive = downloader.downloadUpdate(version.downloadUrl(), downloadProgress -&gt; progressCallback.accept(downloadProgress * 0.5f));</span>
+<span class="nc" id="L35">        Path updateDir = unpacker.unpack(updateArchive, unpackProgress -&gt; progressCallback.accept(unpackProgress * 0.5f + 0.5f));</span>
+        // TODO: where is the update strategy specified? this method is responsible for reading and verifying it
+<span class="nc" id="L37">        var restartCommand = &quot;&quot;; // TODO</span>
+<span class="nc" id="L38">        var updateStrategy = new UpdateStrategy(updateDir, restartCommand);</span>
+<span class="nc" id="L39">        preparedUpdates.put(version.versionString(), updateStrategy);</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public Process applyUpdateAsync(Version version) {
+        // TODO
+<span class="nc" id="L45">        return null;</span>
+    }
+
+<span class="nc" id="L48">    private record UpdateStrategy(Path updateDir, String restartCommand){}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
