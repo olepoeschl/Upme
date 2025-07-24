@@ -33,11 +33,11 @@ public class WebResolverTest {
     void testConstructorArgsWithGetters() {
         var expectedUrl = "https://some.url.com/updates.json";
         var resolver = new WebResolver(expectedUrl);
-        assertEquals(expectedUrl, resolver.getUrl());
+        assertEquals(expectedUrl, resolver.url());
 
         expectedUrl = "https://another.url.com/updates.json";
         resolver = new WebResolver(expectedUrl);
-        assertEquals(expectedUrl, resolver.getUrl());
+        assertEquals(expectedUrl, resolver.url());
     }
 
     @Nested
