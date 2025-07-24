@@ -21,6 +21,9 @@ public class VersionTest {
         assert !v1a.equals(v1e) : "Versions should not be equal if checksum is different";
         assert !v1a.equals(v2) : "Versions should not be equal if version numbers are different";
         assert !v1a.equals(v3) : "Completely different Versions should not be equal";
+        // can probably be removed in favor of static analysis
+        assert v1a.equals(v1a) : "Version should be equal to itself";
+        assert !v1a.equals("not a Version") : "Version should not be equal to a different type";
 
         // check hashCode
         assert v1a.hashCode() == v1b.hashCode();
