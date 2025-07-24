@@ -10,7 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
+import java.util.HashSet;
 
 /**
  * An {@link UpdateResolver} implementation that uses HTTP / HTTPS GET to check for available updates by reading a json
@@ -51,7 +51,7 @@ public record WebResolver(String url) implements UpdateResolver {
 
             try (HttpClient client = HttpClient.newHttpClient()) {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                var availableVersions = mapper.readValue(response.body(), new TypeReference<List<Version>>() {
+                var availableVersions = mapper.readValue(response.body(), new TypeReference<HashSet<Version>>() {
                 });
 
                 var currentSemver = new Semver(currentVersionString);
