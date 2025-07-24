@@ -6,8 +6,8 @@ import org.jspecify.annotations.Nullable;
 import java.util.Objects;
 
 /**
- * Represents a version of an application, including its version string, download URL, description, and an optional
- * SHA3-256 checksum for verification. Differentiates versions based only on the version string.
+ * Represents a version of an application, including its version string, download URL, an optional description, and an
+ * optional SHA3-256 checksum for verification. Differentiates versions based only on the version string.
  * <p>
  * This class is used to encapsulate the details of a specific version of an application.
  * </p>
