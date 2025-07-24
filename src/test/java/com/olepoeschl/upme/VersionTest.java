@@ -14,6 +14,7 @@ public class VersionTest {
         var v3 = new Version("2.0.0", "http://example.com/download/2.0.0", "Major update", "def456");
 
         // check equals
+        assert v1a.equals(v1a) : "Version should be equal to itself";
         assert v1a.equals(v1b) : "Versions should be equal with all identical properties ";
         assert v1a.equals(v1c) : "Versions should be equal even if description is different";
         assert !v1a.equals(v1d) : "Versions should not be equal if checksum is different";
