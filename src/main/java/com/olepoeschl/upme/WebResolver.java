@@ -11,11 +11,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
+// TODO: documentation
 public class WebResolver implements UpdateResolver {
 
     private final String url;
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public WebResolver(String url) {
         this.url = url;
