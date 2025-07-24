@@ -4,12 +4,14 @@ import java.util.List;
 
 public class WebResolver implements UpdateResolver {
 
-    public WebResolver(String url) {
+    private final String url;
 
+    public WebResolver(String url) {
+        this.url = url;
     }
 
     public String getUrl() {
-        return "https://some.url.com/updates.json";
+        return url;
     }
 
     @Override
