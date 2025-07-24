@@ -1,7 +1,7 @@
 package com.olepoeschl.upme;
 
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -24,11 +24,10 @@ public interface Updater {
      * Checks for updates based on the current version and the update repository URL.
      *
      * @return a list of available versions to update to, where each update is represented by a {@link Version} object
-     *
      * @see UpdateResolver#checkAvailableUpdates(String)
      * @since 1.0
      */
-    List<Version> checkAvailableUpdates();
+    Version[] checkAvailableUpdates() throws IOException;
 
     /**
      * Downloads the update for the specified version and unpacks it if necessary. If the given {@code version} object
