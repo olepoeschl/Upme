@@ -30,4 +30,15 @@ public class VersionTest {
         assert v1a.hashCode() != v2.hashCode();
         assert v1a.hashCode() != v3.hashCode();
     }
+
+    @Test
+    void testToString() {
+        var version = new Version("1.0.0", "http://example.com/download/1.0.0", "Initial release", "abc123");
+        String expectedString = "Version[versionString=1.0.0, downloadUrl=http://example.com/download/1.0.0, description=Initial release, checksumSha3256=abc123]";
+        assert version.toString().equals(expectedString) : "Expected '%s', got '%s'".formatted(expectedString, version.toString());
+
+        version = new Version("1.0.2", "http://some.url/update/1.0.2", "Atla is great", null);
+        expectedString = "Version[versionString=1.0.2, downloadUrl=http://some.url/update/1.0.2, description=Atla is great, checksumSha3256=null]";
+        assert version.toString().equals(expectedString) : "Expected '%s', got '%s'".formatted(expectedString, version.toString());
+    }
 }
