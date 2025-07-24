@@ -2,6 +2,7 @@
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jspecify.annotations.NullMarked;
 import org.semver4j.Semver;
 
 import java.io.IOException;
@@ -22,9 +23,10 @@ import java.util.List;
  * @version 1.0.0
  * @since 1.0.0
  */
-<span class="fc" id="L25">public record WebResolver(String url) implements UpdateResolver {</span>
+@NullMarked
+<span class="fc" id="L27">public record WebResolver(String url) implements UpdateResolver {</span>
 
-<span class="fc" id="L27">    private static final ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L29">    private static final ObjectMapper mapper = new ObjectMapper();</span>
 
     /**
      * Checks for available updates by sending an HTTP GET request to the specified URL, which is expected to return a
@@ -42,22 +44,22 @@ import java.util.List;
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
         try {
-<span class="fc" id="L45">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L46">                .uri(URI.create(url))</span>
-<span class="fc" id="L47">                .GET()</span>
-<span class="fc" id="L48">                .build();</span>
+<span class="fc" id="L47">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L48">                .uri(URI.create(url))</span>
+<span class="fc" id="L49">                .GET()</span>
+<span class="fc" id="L50">                .build();</span>
 
-<span class="fc" id="L50">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
-<span class="fc" id="L51">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
-<span class="fc" id="L52">                var availableVersions = mapper.readValue(response.body(), new TypeReference&lt;List&lt;Version&gt;&gt;() {</span>
+<span class="fc" id="L52">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
+<span class="fc" id="L53">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L54">                var availableVersions = mapper.readValue(response.body(), new TypeReference&lt;List&lt;Version&gt;&gt;() {</span>
                 });
 
-<span class="fc" id="L55">                var currentSemver = new Semver(currentVersionString);</span>
-<span class="fc" id="L56">                availableVersions.removeIf(v -&gt; new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));</span>
-<span class="fc" id="L57">                return availableVersions.toArray(new Version[0]);</span>
+<span class="fc" id="L57">                var currentSemver = new Semver(currentVersionString);</span>
+<span class="fc" id="L58">                availableVersions.removeIf(v -&gt; new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));</span>
+<span class="fc" id="L59">                return availableVersions.toArray(new Version[0]);</span>
             }
-<span class="fc" id="L59">        } catch (Exception e) {</span>
-<span class="fc" id="L60">            throw new IOException(&quot;could not check for available updates: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L61">        } catch (Exception e) {</span>
+<span class="fc" id="L62">            throw new IOException(&quot;could not check for available updates: &quot; + e.getMessage(), e);</span>
         }
     }
 
