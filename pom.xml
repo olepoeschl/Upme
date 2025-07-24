@@ -30,7 +30,9 @@
     </properties>
 
     <dependencies>
+        <!-- ==================== -->
         <!-- testing -->
+        <!-- ==================== -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -56,6 +58,13 @@
             <version>${bytebuddy.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>3.13.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ==================== -->
         <!-- misc -->
         <dependency>
             <groupId>org.jspecify</groupId>

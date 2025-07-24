@@ -1,10 +1,29 @@
 package com.olepoeschl.upme;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WebResolverTest {
+
+    private WireMockServer wireMockServer;
+
+    @BeforeEach
+    void setup() {
+        wireMockServer = new WireMockServer(8080);
+        wireMockServer.start();
+        configureFor("localhost", 8080);
+    }
+
+    @AfterEach
+    void teardown() {
+        wireMockServer.stop();
+    }
 
     @Test
     void testConstructorArgsWithGetters() {
@@ -15,6 +34,25 @@ public class WebResolverTest {
         expectedUrl = "https://another.url.com/updates.json";
         resolver = new WebResolver(expectedUrl);
         assertEquals(expectedUrl, resolver.getUrl());
+    }
+
+    @Test
+    void testCheckAvailableUpdatesRegular() {
+        var url = "/updates.json";
+        stubFor(get(urlEqualTo(url))
+            .willReturn(aResponse()
+                .withHeader("Content-Type", "application/json")
+                .withBody("[{\"version\":\"0.0.9\",\"downloadUrl\":\"http://example.com/download/0.0.9\"},{\"version\":\"1.0.1\",\"downloadUrl\":\"http://example.com/download/1.0.1\"},{\"version\":\"1.0.2\",\"downloadUrl\":\"http://example.com/download/1.0.2\",\"description\":\"Bug fixes\", \"checksumSha3256\":\"123def\"}]")));
+        var expected = new Version[2];
+        expected[0] = new Version("1.0.1", "http://example.com/download/1.0.1", "", null);
+        expected[1] = new Version("1.0.2", "http://example.com/download/1.0.2", "Bug fixes", "123def");
+
+        var resolver = new WebResolver("http://127.0.0.1" + url);
+        var updates = resolver.checkAvailableUpdates("1.0.0");
+
+        assertEquals(expected.length, updates.size(), "Expected two updates, got " + updates.size());
+        for(int i = 0; i < expected.length; i++)
+            assertEquals(expected[i], updates.get(i), "Expected update " + i + " to be " + expected[i] + ", got " + updates.get(i));
     }
 
 }
