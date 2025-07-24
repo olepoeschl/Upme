@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.function.Consumer;
 
+// TODO: javadoc
 @NullMarked
 public class ArchiveBasedUpdater implements Updater {
 
