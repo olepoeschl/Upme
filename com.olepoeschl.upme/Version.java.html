@@ -9,8 +9,8 @@ import java.util.Objects;
 
     @Override
     public boolean equals(Object o) {
-<span class="pc bpc" id="L12" title="1 of 2 branches missed.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L13" title="1 of 2 branches missed.">        if (!(o instanceof Version other)) return false;</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (!(o instanceof Version other)) return false;</span>
 <span class="fc bfc" id="L14" title="All 2 branches covered.">        return Objects.equals(versionString, other.versionString)</span>
 <span class="fc bfc" id="L15" title="All 2 branches covered.">                &amp;&amp; Objects.equals(checksumSha3256, other.checksumSha3256);</span>
     }

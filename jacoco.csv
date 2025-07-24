@@ -3,4 +3,4 @@ upme,com.olepoeschl.upme,ArchiveBasedUpdater,72,0,0,0,14,0,6,0,6,0
 upme,com.olepoeschl.upme,ArchiveBasedUpdater.UpdateStrategy,9,0,0,0,1,0,1,0,1,0
 upme,com.olepoeschl.upme,WebResolver,0,75,0,0,0,17,0,5,0,5
 upme,com.olepoeschl.upme,WebResolver.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
-upme,com.olepoeschl.upme,Version,4,55,2,6,0,6,2,5,0,3
+upme,com.olepoeschl.upme,Version,0,59,0,8,0,6,0,7,0,3
