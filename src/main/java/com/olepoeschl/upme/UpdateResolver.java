@@ -1,6 +1,6 @@
 package com.olepoeschl.upme;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * The UpdateResolver interface provides a method to check for available updates for an application.
@@ -19,9 +19,8 @@ public interface UpdateResolver {
      *
      * @param currentVersionString the current version of the application as a semantic versioning string
      * @return a list of available versions to update to, where each update is represented by a {@link Version} object
-     *
      * @since 1.0
      */
-    List<Version> checkAvailableUpdates(String currentVersionString);
+    Version[] checkAvailableUpdates(String currentVersionString) throws IOException;
 
 }

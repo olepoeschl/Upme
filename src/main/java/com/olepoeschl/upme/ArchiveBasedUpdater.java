@@ -2,8 +2,8 @@ package com.olepoeschl.upme;
 
 import org.jspecify.annotations.NullMarked;
 
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -25,7 +25,7 @@ public class ArchiveBasedUpdater implements Updater {
     }
 
     @Override
-    public List<Version> checkAvailableUpdates() {
+    public Version[] checkAvailableUpdates() throws IOException {
         return resolver.checkAvailableUpdates(currentVersionString);
     }
 
