@@ -20,13 +20,14 @@ import java.util.HashSet;
  * &lt;/p&gt;
  *
  * @see Version
+ * @see UpdateResolver
  * @version 1.0.0
  * @since 1.0.0
  */
 @NullMarked
-<span class="fc" id="L27">public record WebResolver(String url) implements UpdateResolver {</span>
+<span class="fc" id="L28">public record WebResolver(String url) implements UpdateResolver {</span>
 
-<span class="fc" id="L29">    private static final ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L30">    private static final ObjectMapper mapper = new ObjectMapper();</span>
 
     /**
      * Checks for available updates by sending an HTTP GET request to the specified URL, which is expected to return a
@@ -44,22 +45,22 @@ import java.util.HashSet;
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
         try {
-<span class="fc" id="L47">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L48">                .uri(URI.create(url))</span>
-<span class="fc" id="L49">                .GET()</span>
-<span class="fc" id="L50">                .build();</span>
+<span class="fc" id="L48">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L49">                .uri(URI.create(url))</span>
+<span class="fc" id="L50">                .GET()</span>
+<span class="fc" id="L51">                .build();</span>
 
-<span class="fc" id="L52">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
-<span class="fc" id="L53">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
-<span class="fc" id="L54">                var availableVersions = mapper.readValue(response.body(), new TypeReference&lt;HashSet&lt;Version&gt;&gt;() {</span>
+<span class="fc" id="L53">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
+<span class="fc" id="L54">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L55">                var availableVersions = mapper.readValue(response.body(), new TypeReference&lt;HashSet&lt;Version&gt;&gt;() {</span>
                 });
 
-<span class="fc" id="L57">                var currentSemver = new Semver(currentVersionString);</span>
-<span class="fc" id="L58">                availableVersions.removeIf(v -&gt; new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));</span>
-<span class="fc" id="L59">                return availableVersions.toArray(new Version[0]);</span>
+<span class="fc" id="L58">                var currentSemver = new Semver(currentVersionString);</span>
+<span class="fc" id="L59">                availableVersions.removeIf(v -&gt; new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));</span>
+<span class="fc" id="L60">                return availableVersions.toArray(new Version[0]);</span>
             }
-<span class="fc" id="L61">        } catch (Exception e) {</span>
-<span class="fc" id="L62">            throw new IOException(&quot;could not check for available updates: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L62">        } catch (Exception e) {</span>
+<span class="fc" id="L63">            throw new IOException(&quot;could not check for available updates: &quot; + e.getMessage(), e);</span>
         }
     }
 
