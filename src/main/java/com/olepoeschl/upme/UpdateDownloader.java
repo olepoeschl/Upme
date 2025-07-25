@@ -3,6 +3,14 @@ package com.olepoeschl.upme;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
+/**
+ * Interface for downloading an update from a specified URL. Typically, the update consists of just one file, e.g. an
+ * archive.
+ *
+ * @author Ole Pöschl
+ * @version 1.0
+ * @since 1.0
+ */
 public interface UpdateDownloader {
 
     /**

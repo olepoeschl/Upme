@@ -3,6 +3,12 @@ package com.olepoeschl.upme;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
+/**
+ * Interface for unpacking an archive into a temporary directory.
+ *
+ * @see ArchiveBasedUpdater
+ * @since 1.0
+ */
 public interface ArchiveUnpacker {
 
     /**

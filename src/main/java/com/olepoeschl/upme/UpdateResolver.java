@@ -3,10 +3,8 @@ package com.olepoeschl.upme;
 import java.io.IOException;
 
 /**
- * The UpdateResolver interface provides a method to check for available updates for an application.
- * It is used to determine which versions of the application are newer than the currently installed version.
- * Implementations of this interface should ideally consider the current version of the application to be able to
- * determine which available versions are updates (i.e., newer versions).
+ * Interface for resolving available updates for an application. That means it checks for downloadable versions and
+ * gathers some information about them, in all cases including their version strings and download URLs.
  *
  * @author Ole Pöschl
  * @version 1.0

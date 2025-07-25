@@ -20,6 +20,7 @@ import java.util.HashSet;
  * </p>
  *
  * @see Version
+ * @see UpdateResolver
  * @version 1.0.0
  * @since 1.0.0
  */
