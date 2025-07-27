@@ -4,8 +4,12 @@ import java.io.IOException;
 
 public class GithubResolver implements UpdateResolver {
 
-    public GithubResolver(String repoOwner, String repoName, String updateFileAssetRegex) {
+    private final String repoOwner, repoName, updateFileAssetRegex;
 
+    public GithubResolver(String repoOwner, String repoName, String updateFileAssetRegex) {
+        this.repoOwner = repoOwner;
+        this.repoName = repoName;
+        this.updateFileAssetRegex = updateFileAssetRegex;
     }
 
     @Override
@@ -14,6 +18,6 @@ public class GithubResolver implements UpdateResolver {
     }
 
     public String getUrl() {
-        return "https://api.github.com/repos/%s/%s/releases".formatted("SomeGithubUser", "SomeCoolRepo");
+        return "https://api.github.com/repos/%s/%s/releases".formatted(repoOwner, repoName);
     }
 }
