@@ -4,22 +4,21 @@ import java.io.IOException;
 
 public class GithubResolver implements UpdateResolver {
 
-    private final String repoOwner, repoName, updateFileAssetRegex;
+    private final String releasesUrl, updateFileAssetRegex;
 
 <span class="fc" id="L9">    public GithubResolver(String repoOwner, String repoName, String updateFileAssetRegex) {</span>
-<span class="fc" id="L10">        this.repoOwner = repoOwner;</span>
-<span class="fc" id="L11">        this.repoName = repoName;</span>
-<span class="fc" id="L12">        this.updateFileAssetRegex = updateFileAssetRegex;</span>
-<span class="fc" id="L13">    }</span>
+<span class="fc" id="L10">        releasesUrl = &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
+<span class="fc" id="L11">        this.updateFileAssetRegex = updateFileAssetRegex;</span>
+<span class="fc" id="L12">    }</span>
 
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
+        // implementation hint: use jackson Tree model to perform search in the json structure
 <span class="nc" id="L17">        return new Version[0];</span>
     }
 
     public String getUrl() {
-        // implementation hint: use jackson Tree model to perform search in the json structure
-<span class="fc" id="L22">        return &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
+<span class="fc" id="L21">        return releasesUrl;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

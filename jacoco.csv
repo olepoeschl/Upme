@@ -2,6 +2,6 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 upme,com.olepoeschl.upme,ArchiveBasedUpdater,72,0,0,0,14,0,6,0,6,0
 upme,com.olepoeschl.upme,ArchiveBasedUpdater.UpdateStrategy,9,0,0,0,1,0,1,0,1,0
 upme,com.olepoeschl.upme,WebResolver,0,72,0,0,0,14,0,4,0,4
-upme,com.olepoeschl.upme,GithubResolver,3,27,0,0,1,6,1,2,1,2
+upme,com.olepoeschl.upme,GithubResolver,3,23,0,0,1,5,1,2,1,2
 upme,com.olepoeschl.upme,WebResolver.new TypeReference() {...},0,3,0,0,0,1,0,1,0,1
 upme,com.olepoeschl.upme,Version,0,44,0,4,0,5,0,5,0,3
