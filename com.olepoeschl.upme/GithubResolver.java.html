@@ -18,7 +18,8 @@ public class GithubResolver implements UpdateResolver {
     }
 
     public String getUrl() {
-<span class="fc" id="L21">        return &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
+        // implementation hint: use jackson Tree model to perform search in the json structure
+<span class="fc" id="L22">        return &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
