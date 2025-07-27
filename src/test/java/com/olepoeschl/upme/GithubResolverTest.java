@@ -12,7 +12,8 @@ public class GithubResolverTest {
         var repoName = "SomeCoolRepo";
         var expectedUrl = "https://api.github.com/repos/%s/%s/releases".formatted(repoOwner, repoName);
 
-        var resolver = new GithubResolver(repoOwner, repoName);
+        var updateFileAssetRegex = "application.exe";
+        var resolver = new GithubResolver(repoOwner, repoName, updateFileAssetRegex);
         assertEquals(expectedUrl, resolver.getUrl());
     }
 
