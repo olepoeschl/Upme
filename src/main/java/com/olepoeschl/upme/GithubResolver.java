@@ -18,6 +18,7 @@ public class GithubResolver implements UpdateResolver {
     }
 
     public String getUrl() {
+        // implementation hint: use jackson Tree model to perform search in the json structure
         return "https://api.github.com/repos/%s/%s/releases".formatted(repoOwner, repoName);
     }
 }
