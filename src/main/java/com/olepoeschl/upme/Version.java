@@ -35,6 +35,6 @@ public record Version(String versionString, String downloadUrl, @Nullable String
 
     @Override
     public int hashCode() {
-        return Objects.hash(versionString);
+        return Objects.hash(versionString, downloadUrl, description, checksum);
     }
 }
