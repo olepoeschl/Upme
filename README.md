@@ -37,7 +37,6 @@ While the diagram above shows a common, but very simple use-case, the library al
 - [x] fetch updates from custom web server
 - [x] fetch updates from Github Releases
 - [ ] support multiple download links for a single update
-- [ ] support for platform-specific updates
 
 <!--## Getting started-->
 <!-- How to use Upme in your project, with code snippets -->
