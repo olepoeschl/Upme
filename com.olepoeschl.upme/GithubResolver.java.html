@@ -38,7 +38,7 @@ public class GithubResolver implements UpdateResolver {
 <span class="fc" id="L38">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
 <span class="fc" id="L39">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
 <span class="fc" id="L40">                var rootNode = mapper.readTree(response.body());</span>
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">                if(rootNode instanceof ArrayNode) {</span>
 <span class="fc" id="L42">                    rootNode.forEach(releaseNode -&gt; {</span>
 <span class="fc" id="L43">                        var versionString = releaseNode.get(&quot;tag_name&quot;).asText();</span>
 <span class="fc bfc" id="L44" title="All 2 branches covered.">                        if(currentSemver.isGreaterThanOrEqualTo(versionString))</span>
@@ -65,16 +65,19 @@ public class GithubResolver implements UpdateResolver {
 <span class="fc" id="L65">                            versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));</span>
                         }
 <span class="fc" id="L67">                    });</span>
+                } else {
+<span class="fc" id="L69">                    throw new IOException(</span>
+<span class="fc" id="L70">                        &quot;could not fetch available updates from Github: unexpected response: &quot; + response.body());</span>
                 }
-<span class="fc" id="L69">                return versions.toArray(Version[]::new);</span>
+<span class="fc" id="L72">                return versions.toArray(Version[]::new);</span>
             }
-<span class="nc" id="L71">        } catch (Exception e) {</span>
-<span class="nc" id="L72">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L74">        } catch (Exception e) {</span>
+<span class="fc" id="L75">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
         }
     }
 
     public String getUrl() {
-<span class="fc" id="L77">        return releasesUrl;</span>
+<span class="fc" id="L80">        return releasesUrl;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
