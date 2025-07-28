@@ -37,6 +37,10 @@ public class GithubResolver implements UpdateResolver {
 
             try (HttpClient client = HttpClient.newHttpClient()) {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                if(response.statusCode() < 200 || response.statusCode() > 299)
+                    throw new IOException("could not fetch available updates form Github: status code "
+                        + response.statusCode() + ": " + response.body());
+
                 var rootNode = mapper.readTree(response.body());
                 if(rootNode instanceof ArrayNode) {
                     rootNode.forEach(releaseNode -> {
@@ -65,10 +69,8 @@ public class GithubResolver implements UpdateResolver {
                             versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));
                         }
                     });
-                } else {
-                    throw new IOException(
-                        "could not fetch available updates from Github: unexpected response: " + response.body());
                 }
+
                 return versions.toArray(Version[]::new);
             }
         } catch (Exception e) {

@@ -52,6 +52,7 @@ public class GithubResolverTest {
                 try (HttpClient client = HttpClient.newHttpClient()) {
                     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                     var rootNode = mapper.readTree(response.body());
+
                     if(rootNode instanceof ArrayNode) {
                         rootNode.forEach(releaseNode -> {
                             // check if the release has an asset that matches the updateFileAssetPattern
