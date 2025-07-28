@@ -38,6 +38,7 @@ public class GithubResolverTest {
         private static final String mockRepoOwner = "olepoeschl";
         private static final String mockRepoName = "UpmeMockRepo";
         private static final String mockRepoUpdateFileAssetPattern = "application.jar";
+        private static final String mockNonexistentRepoName = "non.existent.repo,,";
         private static final ObjectMapper mapper = new ObjectMapper();
 
         private static List<Version> fetchMockRepoVersions() throws IOException {
@@ -86,7 +87,7 @@ public class GithubResolverTest {
         @Test
         void resolveMockRepo() throws IOException {
             var mockRepoVersions = fetchMockRepoVersions();
-            var resolver = new GithubResolver(mockRepoOwner, mockRepoName,mockRepoUpdateFileAssetPattern);
+            var resolver = new GithubResolver(mockRepoOwner, mockRepoName, mockRepoUpdateFileAssetPattern);
 
             for(var version : mockRepoVersions) {
                 var currentVersion = version.versionString();
@@ -115,9 +116,16 @@ public class GithubResolverTest {
 
         @Test
         void throwsIllegalArgumentException_WhenInvalidVersionString() {
-            var resolver = new GithubResolver(mockRepoOwner, mockRepoName,mockRepoUpdateFileAssetPattern);
+            var resolver = new GithubResolver(mockRepoOwner, mockRepoName, mockRepoUpdateFileAssetPattern);
             assertThrows(IllegalArgumentException.class, () ->
                 resolver.checkAvailableUpdates("no_a_valid_version"));
+        }
+
+        @Test
+        void testRepoNotResolvable() {
+            var resolver = new GithubResolver(mockRepoOwner, mockNonexistentRepoName, mockRepoUpdateFileAssetPattern);
+            assertThrows(IOException.class, () -> resolver.checkAvailableUpdates("0.3.0"),
+                "Expected IOException when response failed");
         }
     }
 }

@@ -65,6 +65,9 @@ public class GithubResolver implements UpdateResolver {
                             versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));
                         }
                     });
+                } else {
+                    throw new IOException(
+                        "could not fetch available updates from Github: unexpected response: " + response.body());
                 }
                 return versions.toArray(Version[]::new);
             }
