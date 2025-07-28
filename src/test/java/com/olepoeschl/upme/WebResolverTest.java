@@ -49,7 +49,7 @@ public class WebResolverTest {
             stubFor(get(urlEqualTo(url))
                 .willReturn(aResponse()
                     .withHeader("Content-Type", "application/json")
-                    .withBody("[{\"versionString\":\"0.0.9\",\"downloadUrl\":\"http://example.com/download/0.0.9\"},{\"versionString\":\"1.0.1\",\"downloadUrl\":\"http://example.com/download/1.0.1\"},{\"versionString\":\"1.0.2\",\"downloadUrl\":\"http://example.com/download/1.0.2\",\"description\":\"Bug fixes\", \"checksumSha3256\":\"123def\"}]")));
+                    .withBody("[{\"versionString\":\"0.0.9\",\"downloadUrl\":\"http://example.com/download/0.0.9\"},{\"versionString\":\"1.0.1\",\"downloadUrl\":\"http://example.com/download/1.0.1\"},{\"versionString\":\"1.0.2\",\"downloadUrl\":\"http://example.com/download/1.0.2\",\"description\":\"Bug fixes\", \"checksum\":\"123def\"}]")));
             var expected = new Version[2];
             expected[0] = new Version("1.0.1", "http://example.com/download/1.0.1", null, null);
             expected[1] = new Version("1.0.2", "http://example.com/download/1.0.2", "Bug fixes", "123def");
