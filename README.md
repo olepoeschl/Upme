@@ -34,8 +34,8 @@ While the diagram above shows a common, but very simple use-case, the library al
 - [ ] clean up temporary files
 - [ ] automatically elevate permissions permissions if needed
 - [ ] select desired new version out of a list of available updates
-- [ ] fetch updates from custom web server
-- [ ] fetch updates from Github Releases
+- [x] fetch updates from custom web server
+- [x] fetch updates from Github Releases
 - [ ] support multiple download links for a single update
 - [ ] support for platform-specific updates
 
