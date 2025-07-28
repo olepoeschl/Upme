@@ -1,24 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GithubResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">upme</a> &gt; <a href="index.source.html" class="el_package">com.olepoeschl.upme</a> &gt; <span class="el_source">GithubResolver.java</span></div><h1>GithubResolver.java</h1><pre class="source lang-java linenums">package com.olepoeschl.upme;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import org.semver4j.Semver;
+
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GithubResolver implements UpdateResolver {
 
-    private final String releasesUrl, updateFileAssetRegex;
+    private final String releasesUrl, updateFileAssetPattern;
+<span class="fc" id="L18">    private static final ObjectMapper mapper = new ObjectMapper();</span>
 
-<span class="fc" id="L9">    public GithubResolver(String repoOwner, String repoName, String updateFileAssetRegex) {</span>
-<span class="fc" id="L10">        releasesUrl = &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
-<span class="fc" id="L11">        this.updateFileAssetRegex = updateFileAssetRegex;</span>
-<span class="fc" id="L12">    }</span>
+<span class="fc" id="L20">    public GithubResolver(String repoOwner, String repoName, String updateFileAssetPattern) {</span>
+<span class="fc" id="L21">        releasesUrl = &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
+<span class="fc" id="L22">        this.updateFileAssetPattern = updateFileAssetPattern;</span>
+<span class="fc" id="L23">    }</span>
 
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
-        // implementation hint: use jackson Tree model to perform search in the json structure
-<span class="nc" id="L17">        return new Version[0];</span>
+<span class="fc" id="L27">        var currentSemver = Semver.parse(currentVersionString);</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if(currentSemver == null)</span>
+<span class="fc" id="L29">            throw new IllegalArgumentException(&quot;not a valid semantic versioning string: &quot; + currentVersionString);</span>
+
+<span class="fc" id="L31">        final List&lt;Version&gt; versions = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L33">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L34">                .uri(URI.create(releasesUrl))</span>
+<span class="fc" id="L35">                .GET()</span>
+<span class="fc" id="L36">                .build();</span>
+
+<span class="fc" id="L38">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
+<span class="fc" id="L39">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L40">                var rootNode = mapper.readTree(response.body());</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>
+<span class="fc" id="L42">                    rootNode.forEach(releaseNode -&gt; {</span>
+<span class="fc" id="L43">                        var versionString = releaseNode.get(&quot;tag_name&quot;).asText();</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                        if(currentSemver.isGreaterThanOrEqualTo(versionString))</span>
+<span class="fc" id="L45">                            return;</span>
+
+                        // check if the release has an asset that matches the updateFileAssetPattern
+<span class="fc" id="L48">                        String updateAssetDownloadUrl = null; // null means there is no matching asset</span>
+<span class="fc" id="L49">                        String checksum = null;</span>
+
+<span class="fc" id="L51">                        var assetsNode = releaseNode.get(&quot;assets&quot;);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">                        if(assetsNode instanceof ArrayNode) {</span>
+<span class="pc bfc" id="L53" title="All 2 branches covered.">                            for(int i = 0; i &lt; assetsNode.size(); i++) {</span>
+<span class="fc" id="L54">                                var asset = assetsNode.get(i);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">                                if(asset.get(&quot;name&quot;).asText().equals(updateFileAssetPattern)) {</span>
+<span class="fc" id="L56">                                    updateAssetDownloadUrl = asset.get(&quot;browser_download_url&quot;).asText();</span>
+<span class="fc" id="L57">                                    checksum = asset.get(&quot;digest&quot;).asText().substring(7); // always begins with &quot;sha256:&quot;</span>
+<span class="fc" id="L58">                                    break;</span>
+                                }
+                            }
+                        }
+                        // if a matching asset was found, add this version to the list
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                        if(updateAssetDownloadUrl != null) {</span>
+<span class="fc" id="L64">                            var description = releaseNode.get(&quot;body&quot;).asText();</span>
+<span class="fc" id="L65">                            versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));</span>
+                        }
+<span class="fc" id="L67">                    });</span>
+                }
+<span class="fc" id="L69">                return versions.toArray(Version[]::new);</span>
+            }
+<span class="nc" id="L71">        } catch (Exception e) {</span>
+<span class="nc" id="L72">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
+        }
     }
 
     public String getUrl() {
-<span class="fc" id="L21">        return releasesUrl;</span>
+<span class="fc" id="L77">        return releasesUrl;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

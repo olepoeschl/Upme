@@ -44,23 +44,26 @@ import java.util.HashSet;
      */
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
-        try {
-<span class="fc" id="L48">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L49">                .uri(URI.create(url))</span>
-<span class="fc" id="L50">                .GET()</span>
-<span class="fc" id="L51">                .build();</span>
+<span class="fc" id="L47">        var currentSemver = Semver.parse(currentVersionString);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(currentSemver == null)</span>
+<span class="fc" id="L49">            throw new IllegalArgumentException(&quot;not a valid semantic versioning string: &quot; + currentVersionString);</span>
 
-<span class="fc" id="L53">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
-<span class="fc" id="L54">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
-<span class="fc" id="L55">                var availableVersions = mapper.readValue(response.body(), new TypeReference&lt;HashSet&lt;Version&gt;&gt;() {</span>
+        try {
+<span class="fc" id="L52">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="fc" id="L53">                .uri(URI.create(url))</span>
+<span class="fc" id="L54">                .GET()</span>
+<span class="fc" id="L55">                .build();</span>
+
+<span class="fc" id="L57">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
+<span class="fc" id="L58">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="fc" id="L59">                var availableVersions = mapper.readValue(response.body(), new TypeReference&lt;HashSet&lt;Version&gt;&gt;() {</span>
                 });
 
-<span class="fc" id="L58">                var currentSemver = new Semver(currentVersionString);</span>
-<span class="fc" id="L59">                availableVersions.removeIf(v -&gt; new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));</span>
-<span class="fc" id="L60">                return availableVersions.toArray(new Version[0]);</span>
+<span class="fc" id="L62">                availableVersions.removeIf(v -&gt; new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));</span>
+<span class="fc" id="L63">                return availableVersions.toArray(new Version[0]);</span>
             }
-<span class="fc" id="L62">        } catch (Exception e) {</span>
-<span class="fc" id="L63">            throw new IOException(&quot;could not check for available updates: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L65">        } catch (Exception e) {</span>
+<span class="fc" id="L66">            throw new IOException(&quot;could not check for available updates: &quot; + e.getMessage(), e);</span>
         }
     }
 
