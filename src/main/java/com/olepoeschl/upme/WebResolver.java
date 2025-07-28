@@ -44,6 +44,10 @@ public record WebResolver(String url) implements UpdateResolver {
      */
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
+        var currentSemver = Semver.parse(currentVersionString);
+        if(currentSemver == null)
+            throw new IllegalArgumentException("not a valid semantic versioning string: " + currentVersionString);
+
         try {
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -55,7 +59,6 @@ public record WebResolver(String url) implements UpdateResolver {
                 var availableVersions = mapper.readValue(response.body(), new TypeReference<HashSet<Version>>() {
                 });
 
-                var currentSemver = new Semver(currentVersionString);
                 availableVersions.removeIf(v -> new Semver(v.versionString()).isLowerThanOrEqualTo(currentSemver));
                 return availableVersions.toArray(new Version[0]);
             }

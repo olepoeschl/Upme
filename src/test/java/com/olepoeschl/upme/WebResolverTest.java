@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 
@@ -79,6 +80,14 @@ public class WebResolverTest {
             var resolver = new WebResolver("http://127.0.0.1:8080" + url);
             assertThrows(IOException.class, () -> resolver.checkAvailableUpdates("1.0.0"),
                 "Expected IOException when server returns invalid JSON");
+        }
+
+        @Test
+        void testInvalidCurrentVersion() {
+            var resolver = new WebResolver("does_not_matter_which_url");
+            assertThrows(IllegalArgumentException.class, () -> {
+                resolver.checkAvailableUpdates("not_a_valid_version");
+            });
         }
     }
 }
