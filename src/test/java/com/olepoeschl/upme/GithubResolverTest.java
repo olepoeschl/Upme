@@ -1,20 +1,17 @@
 package com.olepoeschl.upme;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.semver4j.Semver;
 
-import java.io.IO;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class GithubResolverTest {
 
     // this token has read access to the UpmeMockRepo repository and is used exclusively in this test, that is for fetching Releases
-    private static final String githubMockRepoAccessToken = "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";
+    private static final String githubMockRepoAccessToken = "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";
 
     @Test
     void testUrlIsCorrectlyConstructed() {
@@ -68,12 +65,16 @@ public class GithubResolverTest {
                 HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://api.github.com/repos/%s/%s/releases".formatted(mockRepoOwner, mockRepoName)))
                     .GET()
-                    .setHeader("Authorization", "Bearer " + githubMockRepoAccessToken)
+                    .header("Authorization", "Bearer " + githubMockRepoAccessToken)
                     .build();
 
                 try (HttpClient client = HttpClient.newHttpClient()) {
                     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                     var rootNode = mapper.readTree(response.body());
+                    
+                    if(response.statusCode() < 200 || response.statusCode() > 299)
+                        throw new IOException("could not fetch available updates form Github: status code "
+                            + response.statusCode() + ": " + response.body());
 
                     if(rootNode instanceof ArrayNode) {
                         rootNode.forEach(releaseNode -> {
@@ -128,7 +129,6 @@ public class GithubResolverTest {
 
             // test if the resolver correctly resolves all releases
             var currentVersion = "0.0.0";
-            var currentSemver = Semver.parse(currentVersion);
             Version[] expectedAvailableUpdates = mockRepoVersions.toArray(Version[]::new);
             Version[] gotAvailableUpdates = resolver.checkAvailableUpdates(currentVersion);
             assertEquals(expectedAvailableUpdates.length, gotAvailableUpdates.length,
