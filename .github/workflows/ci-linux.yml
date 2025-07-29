@@ -27,6 +27,8 @@ jobs:
 
       - name: Build, execute unit tests, package, execute integration tests
         run: mvn --batch-mode verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate Code Coverage Badge
         if: always()
