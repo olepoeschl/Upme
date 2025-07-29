@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GithubResolverTest {
 
+    // this token has read access to the UpmeMockRepo repository and is used exclusively in this test, that is for fetching Releases
     private static final String githubMockRepoAccessToken = "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";
 
     @Test
