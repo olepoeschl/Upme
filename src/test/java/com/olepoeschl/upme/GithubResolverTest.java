@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.semver4j.Semver;
 
 import java.io.IOException;
@@ -18,11 +19,18 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 public class GithubResolverTest {
 
     // this token has read access to the UpmeMockRepo repository and is used exclusively in this test, that is for fetching Releases
-    private static final String githubMockRepoAccessToken = "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";
+    private static String GITHUB_TOKEN;
+
+    @BeforeAll
+    static void setup() {
+        GITHUB_TOKEN = System.getenv("GITHUB_TOKEN");
+    }
+
 
     @Test
     void testUrlIsCorrectlyConstructed() {
@@ -65,7 +73,7 @@ public class GithubResolverTest {
                 HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://api.github.com/repos/%s/%s/releases".formatted(mockRepoOwner, mockRepoName)))
                     .GET()
-                    .header("Authorization", "Bearer " + githubMockRepoAccessToken)
+                    .header("Authorization", "Bearer " + GITHUB_TOKEN)
                     .build();
 
                 try (HttpClient client = HttpClient.newHttpClient()) {
@@ -110,9 +118,11 @@ public class GithubResolverTest {
 
         @Test
         void resolveMockRepo() throws IOException {
+            assumeFalse(GITHUB_TOKEN == null);
+
             var mockRepoVersions = fetchMockRepoVersions();
             var resolver = new GithubResolver(mockRepoOwner, mockRepoName, mockRepoUpdateFileAssetPattern);
-            resolver.addHeader("Authorization", "Bearer " + githubMockRepoAccessToken);
+            resolver.addHeader("Authorization", "Bearer " + GITHUB_TOKEN);
 
             for(var version : mockRepoVersions) {
                 var currentVersion = version.versionString();
