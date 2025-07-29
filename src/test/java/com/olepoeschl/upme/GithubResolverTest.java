@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class GithubResolverTest {
 
     // this token has read access to the UpmeMockRepo repository and is used exclusively in this test, that is for fetching Releases
-    private static final String githubMockRepoAccessToken = "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";
+    private static final String githubMockRepoAccessToken = "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";
 
     @Test
     void testUrlIsCorrectlyConstructed() {
