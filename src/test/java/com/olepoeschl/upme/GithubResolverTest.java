@@ -35,6 +35,22 @@ public class GithubResolverTest {
         assertEquals(expectedUrl, resolver.getUrl());
     }
 
+    @Test
+    void testAddHeaders() {
+        var expectedHeaders = new HashMap<String, String>();
+        expectedHeaders.put("header1", "header1 value");
+        expectedHeaders.put("header2", "header2 value");
+        expectedHeaders.put("auth", "token xyz_123_abc456lmn789");
+        expectedHeaders.put("Accept-Language", "de");
+
+        var resolver = new GithubResolver("some_owner", "some_repo", "some_file_pattern");
+        for(var entry : expectedHeaders.entrySet())
+            resolver.addHeader(entry.getKey(), entry.getValue());
+
+        Map<String, String> gotHeaders = resolver.getHeaders();
+        assertEquals(expectedHeaders, gotHeaders);
+    }
+
     @Nested
     class CheckAvailableUpdates {
         private static final String mockRepoOwner = "olepoeschl";
