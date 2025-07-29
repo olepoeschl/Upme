@@ -1,85 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GithubResolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">upme</a> &gt; <a href="index.source.html" class="el_package">com.olepoeschl.upme</a> &gt; <span class="el_source">GithubResolver.java</span></div><h1>GithubResolver.java</h1><pre class="source lang-java linenums">package com.olepoeschl.upme;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.semver4j.Semver;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.semver4j.Semver;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
+@NullMarked
 public class GithubResolver implements UpdateResolver {
 
+<span class="fc" id="L22">    private static final ObjectMapper mapper = new ObjectMapper();</span>
     private final String releasesUrl, updateFileAssetPattern;
-<span class="fc" id="L18">    private static final ObjectMapper mapper = new ObjectMapper();</span>
+<span class="fc" id="L24">    private final Map&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
 
-<span class="fc" id="L20">    public GithubResolver(String repoOwner, String repoName, String updateFileAssetPattern) {</span>
-<span class="fc" id="L21">        releasesUrl = &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
-<span class="fc" id="L22">        this.updateFileAssetPattern = updateFileAssetPattern;</span>
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L26">    public GithubResolver(String repoOwner, String repoName, String updateFileAssetPattern) {</span>
+<span class="fc" id="L27">        releasesUrl = &quot;https://api.github.com/repos/%s/%s/releases&quot;.formatted(repoOwner, repoName);</span>
+<span class="fc" id="L28">        this.updateFileAssetPattern = updateFileAssetPattern;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getUrl() {
+<span class="fc" id="L32">        return releasesUrl;</span>
+    }
+
+    public Map&lt;String, String&gt; getHeaders() {
+<span class="fc" id="L36">        return headers;</span>
+    }
+
+    public void addHeader(String key, String value) {
+<span class="fc" id="L40">        headers.put(key, value);</span>
+<span class="fc" id="L41">    }</span>
 
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
-<span class="fc" id="L27">        var currentSemver = Semver.parse(currentVersionString);</span>
-<span class="fc bfc" id="L28" title="All 2 branches covered.">        if(currentSemver == null)</span>
-<span class="fc" id="L29">            throw new IllegalArgumentException(&quot;not a valid semantic versioning string: &quot; + currentVersionString);</span>
+<span class="fc" id="L45">        var currentSemver = Semver.parse(currentVersionString);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(currentSemver == null)</span>
+<span class="fc" id="L47">            throw new IllegalArgumentException(&quot;not a valid semantic versioning string: &quot; + currentVersionString);</span>
 
-<span class="fc" id="L31">        final List&lt;Version&gt; versions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L49">        final List&lt;Version&gt; versions = new ArrayList&lt;&gt;();</span>
         try {
-<span class="fc" id="L33">            HttpRequest request = HttpRequest.newBuilder()</span>
-<span class="fc" id="L34">                .uri(URI.create(releasesUrl))</span>
-<span class="fc" id="L35">                .GET()</span>
-<span class="fc" id="L36">                .build();</span>
+<span class="fc" id="L51">            var reqBuilder = HttpRequest.newBuilder()</span>
+<span class="fc" id="L52">                .uri(URI.create(releasesUrl))</span>
+<span class="fc" id="L53">                .GET();</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            for(var header : headers.entrySet())</span>
+<span class="fc" id="L55">                reqBuilder.header(header.getKey(), header.getValue());</span>
+<span class="fc" id="L56">            HttpRequest request = reqBuilder.build();</span>
 
-<span class="fc" id="L38">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
-<span class="fc" id="L39">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
-<span class="pc bpc" id="L40" title="1 of 4 branches missed.">                if(response.statusCode() &lt; 200 || response.statusCode() &gt; 299)</span>
-<span class="fc" id="L41">                    throw new IOException(&quot;could not fetch available updates form Github: status code &quot;</span>
-<span class="fc" id="L42">                        + response.statusCode() + &quot;: &quot; + response.body());</span>
+<span class="fc" id="L58">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
+<span class="fc" id="L59">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">                if(response.statusCode() &lt; 200 || response.statusCode() &gt; 299)</span>
+<span class="fc" id="L61">                    throw new IOException(&quot;could not fetch available updates form Github: status code &quot;</span>
+<span class="fc" id="L62">                        + response.statusCode() + &quot;: &quot; + response.body());</span>
 
-<span class="fc" id="L44">                var rootNode = mapper.readTree(response.body());</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>
-<span class="fc" id="L46">                    rootNode.forEach(releaseNode -&gt; {</span>
-<span class="fc" id="L47">                        var versionString = releaseNode.get(&quot;tag_name&quot;).asText();</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">                        if(currentSemver.isGreaterThanOrEqualTo(versionString))</span>
-<span class="fc" id="L49">                            return;</span>
+<span class="fc" id="L64">                var rootNode = mapper.readTree(response.body());</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>
+<span class="fc" id="L66">                    rootNode.forEach(releaseNode -&gt; {</span>
+<span class="fc" id="L67">                        var versionString = releaseNode.get(&quot;tag_name&quot;).asText();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">                        if(currentSemver.isGreaterThanOrEqualTo(versionString))</span>
+<span class="fc" id="L69">                            return;</span>
 
                         // check if the release has an asset that matches the updateFileAssetPattern
-<span class="fc" id="L52">                        String updateAssetDownloadUrl = null; // null means there is no matching asset</span>
-<span class="fc" id="L53">                        String checksum = null;</span>
+<span class="fc" id="L72">                        String updateAssetDownloadUrl = null; // null means there is no matching asset</span>
+<span class="fc" id="L73">                        String checksum = null;</span>
 
-<span class="fc" id="L55">                        var assetsNode = releaseNode.get(&quot;assets&quot;);</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">                        if(assetsNode instanceof ArrayNode) {</span>
-<span class="pc bfc" id="L57" title="All 2 branches covered.">                            for(int i = 0; i &lt; assetsNode.size(); i++) {</span>
-<span class="fc" id="L58">                                var asset = assetsNode.get(i);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">                                if(asset.get(&quot;name&quot;).asText().equals(updateFileAssetPattern)) {</span>
-<span class="fc" id="L60">                                    updateAssetDownloadUrl = asset.get(&quot;browser_download_url&quot;).asText();</span>
-<span class="fc" id="L61">                                    checksum = asset.get(&quot;digest&quot;).asText().substring(7); // always begins with &quot;sha256:&quot;</span>
-<span class="fc" id="L62">                                    break;</span>
+<span class="fc" id="L75">                        var assetsNode = releaseNode.get(&quot;assets&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                        if(assetsNode instanceof ArrayNode) {</span>
+<span class="pc bfc" id="L77" title="All 2 branches covered.">                            for(int i = 0; i &lt; assetsNode.size(); i++) {</span>
+<span class="fc" id="L78">                                var asset = assetsNode.get(i);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                                if(asset.get(&quot;name&quot;).asText().equals(updateFileAssetPattern)) {</span>
+<span class="fc" id="L80">                                    updateAssetDownloadUrl = asset.get(&quot;browser_download_url&quot;).asText();</span>
+<span class="fc" id="L81">                                    checksum = asset.get(&quot;digest&quot;).asText().substring(7); // always begins with &quot;sha256:&quot;</span>
+<span class="fc" id="L82">                                    break;</span>
                                 }
                             }
                         }
                         // if a matching asset was found, add this version to the list
-<span class="fc bfc" id="L67" title="All 2 branches covered.">                        if(updateAssetDownloadUrl != null) {</span>
-<span class="fc" id="L68">                            var description = releaseNode.get(&quot;body&quot;).asText();</span>
-<span class="fc" id="L69">                            versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">                        if(updateAssetDownloadUrl != null) {</span>
+<span class="fc" id="L88">                            var description = releaseNode.get(&quot;body&quot;).asText();</span>
+<span class="fc" id="L89">                            versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));</span>
                         }
-<span class="fc" id="L71">                    });</span>
+<span class="fc" id="L91">                    });</span>
                 }
 
-<span class="fc" id="L74">                return versions.toArray(Version[]::new);</span>
+<span class="fc" id="L94">                return versions.toArray(Version[]::new);</span>
             }
-<span class="fc" id="L76">        } catch (Exception e) {</span>
-<span class="fc" id="L77">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L96">        } catch (Exception e) {</span>
+<span class="fc" id="L97">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
         }
     }
 
-    public String getUrl() {
-<span class="fc" id="L82">        return releasesUrl;</span>
-    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
