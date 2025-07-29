@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GithubResolverTest {
 
+    private static final String githubMockRepoAccessToken = "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";
+
     @Test
     void testUrlIsCorrectlyConstructed() {
         var repoOwner = "SomeGithubUser";
@@ -47,6 +49,7 @@ public class GithubResolverTest {
                 HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://api.github.com/repos/%s/%s/releases".formatted(mockRepoOwner, mockRepoName)))
                     .GET()
+                    .setHeader("Authorization", "Bearer " + githubMockRepoAccessToken)
                     .build();
 
                 try (HttpClient client = HttpClient.newHttpClient()) {
