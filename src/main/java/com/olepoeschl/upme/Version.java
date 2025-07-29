@@ -1,9 +1,9 @@
 package com.olepoeschl.upme;
 
+import java.util.Objects;
+
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
-
-import java.util.Objects;
 
 /**
  * Represents a version of an application, including its version string, download URL, an optional description, and an
@@ -36,5 +36,10 @@ public record Version(String versionString, String downloadUrl, @Nullable String
     @Override
     public int hashCode() {
         return Objects.hash(versionString, downloadUrl, description, checksum);
+    }
+
+    @Override
+    public String toString() {
+        return "%s[versionString=%s, downloadUrl=%s, checksum=%s]".formatted(getClass().getSimpleName(), versionString, downloadUrl, checksum);
     }
 }
