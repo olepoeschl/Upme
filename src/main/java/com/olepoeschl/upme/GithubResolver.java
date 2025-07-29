@@ -1,25 +1,43 @@
 package com.olepoeschl.upme;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import org.semver4j.Semver;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.jspecify.annotations.NullMarked;
+import org.semver4j.Semver;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
+@NullMarked
 public class GithubResolver implements UpdateResolver {
 
-    private final String releasesUrl, updateFileAssetPattern;
     private static final ObjectMapper mapper = new ObjectMapper();
+    private final String releasesUrl, updateFileAssetPattern;
+    private final Map<String, String> headers = new HashMap<String, String>();
 
     public GithubResolver(String repoOwner, String repoName, String updateFileAssetPattern) {
         releasesUrl = "https://api.github.com/repos/%s/%s/releases".formatted(repoOwner, repoName);
         this.updateFileAssetPattern = updateFileAssetPattern;
+    }
+
+    public String getUrl() {
+        return releasesUrl;
+    }
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public void addHeader(String key, String value) {
+        headers.put(key, value);
     }
 
     @Override
@@ -30,10 +48,12 @@ public class GithubResolver implements UpdateResolver {
 
         final List<Version> versions = new ArrayList<>();
         try {
-            HttpRequest request = HttpRequest.newBuilder()
+            var reqBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(releasesUrl))
-                .GET()
-                .build();
+                .GET();
+            for(var header : headers.entrySet())
+                reqBuilder.header(header.getKey(), header.getValue());
+            HttpRequest request = reqBuilder.build();
 
             try (HttpClient client = HttpClient.newHttpClient()) {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -78,7 +98,4 @@ public class GithubResolver implements UpdateResolver {
         }
     }
 
-    public String getUrl() {
-        return releasesUrl;
-    }
 }

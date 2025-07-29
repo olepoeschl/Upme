@@ -112,6 +112,7 @@ public class GithubResolverTest {
         void resolveMockRepo() throws IOException {
             var mockRepoVersions = fetchMockRepoVersions();
             var resolver = new GithubResolver(mockRepoOwner, mockRepoName, mockRepoUpdateFileAssetPattern);
+            resolver.addHeader("Authorization", "Bearer " + githubMockRepoAccessToken);
 
             for(var version : mockRepoVersions) {
                 var currentVersion = version.versionString();
