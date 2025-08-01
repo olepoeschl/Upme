@@ -1,6 +1,6 @@
 <!-- Logo and description -->
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/db2e76d2-6ebd-4c07-b0af-f47d69171ede"/>
+    <img src="https://github.com/user-attachments/assets/8665d15f-a2bf-40ab-9de3-6e9bdedba800"/>
     <!--h3 align="center">...because Java desktop development isn't dead</h3-->
 </div>
 
