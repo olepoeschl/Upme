@@ -32,7 +32,6 @@ While the diagram above shows a common, but very simple use-case, the library al
 - [ ] rollback on error
 - [ ] clean up temporary files
 - [ ] select desired new version out of a list of available updates
-- [ ] configure which files to preserve during update
 - [ ] create log file
 - [x] fetch updates from custom web server
 - [x] fetch updates from Github Releases
