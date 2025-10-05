@@ -33,20 +33,22 @@ public class ArchiveBasedUpdater implements Updater {
     @Override
     public void prepareUpdate(Version version, Consumer&lt;Float&gt; progressCallback) {
 <span class="nc" id="L35">        Path updateArchive = downloader.downloadUpdate(version.downloadUrl(), downloadProgress -&gt; progressCallback.accept(downloadProgress * 0.5f));</span>
-<span class="nc" id="L36">        Path updateDir = unpacker.unpack(updateArchive, unpackProgress -&gt; progressCallback.accept(unpackProgress * 0.5f + 0.5f));</span>
+        // TODO: if checksum is given, verify it. If the checksum doesn't match, delete the downloaded file and throw an exception
+<span class="nc" id="L37">        Path updateDir = unpacker.unpack(updateArchive, unpackProgress -&gt; progressCallback.accept(unpackProgress * 0.5f + 0.5f));</span>
         // TODO: where is the update strategy specified? this method is responsible for reading and verifying it
-<span class="nc" id="L38">        var restartCommand = &quot;&quot;; // TODO</span>
-<span class="nc" id="L39">        var updateStrategy = new UpdateStrategy(updateDir, restartCommand);</span>
-<span class="nc" id="L40">        preparedUpdates.put(version.versionString(), updateStrategy);</span>
-<span class="nc" id="L41">    }</span>
+<span class="nc" id="L39">        var restartCommand = &quot;&quot;; // TODO</span>
+<span class="nc" id="L40">        var updateStrategy = new UpdateStrategy(updateDir, restartCommand);</span>
+<span class="nc" id="L41">        preparedUpdates.put(version.versionString(), updateStrategy);</span>
+<span class="nc" id="L42">    }</span>
 
     @Override
     public Process applyUpdateAsync(Version version) {
         // TODO
-<span class="nc" id="L46">        return null;</span>
+<span class="nc" id="L47">        return null;</span>
     }
 
-<span class="nc" id="L49">    private record UpdateStrategy(Path updateDir, String restartCommand){}</span>
+    // TODO: is there anything else needed here?
+<span class="nc" id="L51">    private record UpdateStrategy(Path updateDir, String restartCommand){}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
