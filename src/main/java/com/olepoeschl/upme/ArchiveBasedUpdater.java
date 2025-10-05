@@ -33,6 +33,7 @@ public class ArchiveBasedUpdater implements Updater {
     @Override
     public void prepareUpdate(Version version, Consumer<Float> progressCallback) {
         Path updateArchive = downloader.downloadUpdate(version.downloadUrl(), downloadProgress -> progressCallback.accept(downloadProgress * 0.5f));
+        // TODO: if checksum is given, verify it. If the checksum doesn't match, delete the downloaded file and throw an exception
         Path updateDir = unpacker.unpack(updateArchive, unpackProgress -> progressCallback.accept(unpackProgress * 0.5f + 0.5f));
         // TODO: where is the update strategy specified? this method is responsible for reading and verifying it
         var restartCommand = ""; // TODO
@@ -46,6 +47,7 @@ public class ArchiveBasedUpdater implements Updater {
         return null;
     }
 
+    // TODO: is there anything else needed here?
     private record UpdateStrategy(Path updateDir, String restartCommand){}
 
 }

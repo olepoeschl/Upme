@@ -21,7 +21,7 @@ public class GithubResolver implements UpdateResolver {
 
     private static final ObjectMapper mapper = new ObjectMapper();
     private final String releasesUrl, updateFileAssetPattern;
-    private final Map<String, String> headers = new HashMap<String, String>();
+    private final Map<String, String> headers = new HashMap<>();
 
     public GithubResolver(String repoOwner, String repoName, String updateFileAssetPattern) {
         releasesUrl = "https://api.github.com/repos/%s/%s/releases".formatted(repoOwner, repoName);
