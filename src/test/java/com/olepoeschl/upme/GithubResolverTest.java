@@ -60,7 +60,7 @@ public class GithubResolverTest {
     }
 
     @Nested
-    class CheckAvailableUpdates {
+    class CheckAvailableUpdatesTest {
         private static final String mockRepoOwner = "olepoeschl";
         private static final String mockRepoName = "UpmeMockRepo";
         private static final String mockRepoUpdateFileAssetPattern = "application.jar";
@@ -79,7 +79,7 @@ public class GithubResolverTest {
                 try (HttpClient client = HttpClient.newHttpClient()) {
                     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                     var rootNode = mapper.readTree(response.body());
-                    
+
                     if(response.statusCode() < 200 || response.statusCode() > 299)
                         throw new IOException("could not fetch available updates form Github: status code "
                             + response.statusCode() + ": " + response.body());

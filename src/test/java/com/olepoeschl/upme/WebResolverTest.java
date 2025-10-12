@@ -5,7 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 
@@ -42,7 +41,7 @@ public class WebResolverTest {
     }
 
     @Nested
-    class CheckAvailableUpdates {
+    class CheckAvailableUpdatesTest {
         @Test
         void testRegular() throws IOException {
             var url = "/updates.json";
