@@ -24,7 +24,7 @@
 __Upme__ will be a library for adding self-update capabilities to Java desktop applications. Its main goals are simplicity and robustness.
 
 > [!IMPORTANT]
-> Considering the small amount of time I am able to dedicate to this project currently and therefore its really slow progress, I want to let you know that I didn't give on it. Due to my studies, an exchange semester I do abroad and other side projects, I will probably not be able to spend much time on it until next winter. However, I do look forward to making this little dream of mine come true. Expect updates in late 2026 / 2027.
+> Despite the small amount of time I am able to dedicate to this project currently and therefore its really slow progress, I want to let you know that I didn't give up on it. Due to my studies, other side projects and an exchange semester I will do abroad, I will probably not be able to spend much time on it until next winter. However, I do look forward to making this little dream of mine come true. Expect updates in late 2026 / 2027.
 
 ## Features
 - [x] fetch updates from custom web server
