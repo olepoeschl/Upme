@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebDownloader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">upme</a> &gt; <a href="index.source.html" class="el_package">com.olepoeschl.upme</a> &gt; <span class="el_source">WebDownloader.java</span></div><h1>WebDownloader.java</h1><pre class="source lang-java linenums">package com.olepoeschl.upme;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Duration;
+import java.util.function.Consumer;
+
+public class WebDownloader implements UpdateDownloader, AutoCloseable {
+
+    private final HttpClient client;
+
+<span class="fc" id="L20">    public WebDownloader() {</span>
+<span class="fc" id="L21">        client = HttpClient.newHttpClient();</span>
+<span class="fc" id="L22">    }</span>
+
+    @Override
+    public Path downloadUpdate(String downloadUrl, Consumer&lt;Float&gt; progressCallback) throws IOException {
+<span class="fc" id="L26">        Path updateFilePath = Files.createTempFile(&quot;&quot;, &quot;&quot;);</span>
+
+<span class="fc" id="L28">        URI uri = URI.create(downloadUrl);</span>
+<span class="fc" id="L29">        HttpRequest req = HttpRequest.newBuilder()</span>
+<span class="fc" id="L30">            .uri(uri)</span>
+<span class="fc" id="L31">            .timeout(Duration.ofMillis(10_000))</span>
+<span class="fc" id="L32">            .GET()</span>
+<span class="fc" id="L33">            .build();</span>
+
+<span class="fc" id="L35">        HttpResponse.BodyHandler&lt;InputStream&gt; handler = HttpResponse.BodyHandlers.ofInputStream();</span>
+        HttpResponse&lt;InputStream&gt; response;
+        try {
+<span class="fc" id="L38">            response = client.send(req, handler);</span>
+<span class="nc" id="L39">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L40">            throw new RuntimeException(&quot;Could not download update: interrupted while sending http download request&quot;, e);</span>
+<span class="fc" id="L41">        }</span>
+
+<span class="fc" id="L43">        HttpHeaders headers = response.headers();</span>
+<span class="fc" id="L44">        long contentLength = headers.firstValueAsLong(&quot;Content-Length&quot;).orElse(-1L);</span>
+
+        try (
+<span class="fc" id="L47">            InputStream is = response.body();</span>
+<span class="fc" id="L48">            FileOutputStream fos = new FileOutputStream(updateFilePath.toFile());</span>
+        ) {
+<span class="fc" id="L50">            byte[] buffer = new byte[4096];</span>
+<span class="fc" id="L51">            long totalBytesDownloaded = 0L;</span>
+            int bytesDownloaded;
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            while((bytesDownloaded = is.read(buffer)) != -1) {</span>
+<span class="fc" id="L55">                totalBytesDownloaded += bytesDownloaded;</span>
+<span class="fc" id="L56">                fos.write(buffer, 0, bytesDownloaded);</span>
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">                if(progressCallback != null &amp;&amp; contentLength &gt; 0)</span>
+<span class="nc" id="L58">                    progressCallback.accept((float) totalBytesDownloaded / contentLength);</span>
+            }
+<span class="nc" id="L60">        } catch (IOException e) {</span>
+<span class="nc" id="L61">            throw new IOException(&quot;Could not download update: I/O error while downloading file&quot;, e);</span>
+<span class="fc" id="L62">        }</span>
+
+<span class="fc" id="L64">        return updateFilePath;</span>
+    }
+
+    @Override
+    public void close() throws IOException {
+<span class="fc" id="L69">        client.close();</span>
+<span class="fc" id="L70">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
