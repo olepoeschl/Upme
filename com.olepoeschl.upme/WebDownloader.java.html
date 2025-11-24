@@ -54,8 +54,8 @@ public class WebDownloader implements UpdateDownloader, AutoCloseable {
 <span class="fc bfc" id="L54" title="All 2 branches covered.">            while((bytesDownloaded = is.read(buffer)) != -1) {</span>
 <span class="fc" id="L55">                totalBytesDownloaded += bytesDownloaded;</span>
 <span class="fc" id="L56">                fos.write(buffer, 0, bytesDownloaded);</span>
-<span class="pc bpc" id="L57" title="2 of 4 branches missed.">                if(progressCallback != null &amp;&amp; contentLength &gt; 0)</span>
-<span class="nc" id="L58">                    progressCallback.accept((float) totalBytesDownloaded / contentLength);</span>
+<span class="pc bpc" id="L57" title="1 of 4 branches missed.">                if(progressCallback != null &amp;&amp; contentLength &gt; 0)</span>
+<span class="fc" id="L58">                    progressCallback.accept((float) totalBytesDownloaded / contentLength);</span>
             }
 <span class="nc" id="L60">        } catch (IOException e) {</span>
 <span class="nc" id="L61">            throw new IOException(&quot;Could not download update: I/O error while downloading file&quot;, e);</span>
