@@ -31,14 +31,18 @@ public class ArchiveBasedUpdater implements Updater {
     }
 
     @Override
-    public void prepareUpdate(Version version, Consumer<Float> progressCallback) {
-        Path updateArchive = downloader.downloadUpdate(version.downloadUrl(), downloadProgress -> progressCallback.accept(downloadProgress * 0.5f));
-        // TODO: if checksum is given, verify it. If the checksum doesn't match, delete the downloaded file and throw an exception
-        Path updateDir = unpacker.unpack(updateArchive, unpackProgress -> progressCallback.accept(unpackProgress * 0.5f + 0.5f));
-        // TODO: where is the update strategy specified? this method is responsible for reading and verifying it
-        var restartCommand = ""; // TODO
-        var updateStrategy = new UpdateStrategy(updateDir, restartCommand);
-        preparedUpdates.put(version.versionString(), updateStrategy);
+    public void prepareUpdate(Version version, Consumer<Float> progressCallback) throws IOException {
+        try {
+            Path updateArchive = downloader.downloadUpdate(version.downloadUrl(), downloadProgress -> progressCallback.accept(downloadProgress * 0.5f));
+            // TODO: if checksum is given, verify it. If the checksum doesn't match, delete the downloaded file and throw an exception
+            Path updateDir = unpacker.unpack(updateArchive, unpackProgress -> progressCallback.accept(unpackProgress * 0.5f + 0.5f));
+            // TODO: where is the update strategy specified? this method is responsible for reading and verifying it
+            var restartCommand = ""; // TODO
+            var updateStrategy = new UpdateStrategy(updateDir, restartCommand);
+            preparedUpdates.put(version.versionString(), updateStrategy);
+        } catch (IOException e) {
+            throw new IOException("Could not prepare update for version " + version.versionString() + ": " + e.getMessage(), e);
+        }
     }
 
     @Override

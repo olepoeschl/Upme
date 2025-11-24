@@ -40,7 +40,7 @@ public interface Updater {
      * @see ArchiveUnpacker#unpack(Path, Consumer)
      * @since 1.0
      */
-    void prepareUpdate(Version version, Consumer<Float> progressCallback);
+    void prepareUpdate(Version version, Consumer<Float> progressCallback) throws IOException;
 
     /**
      * Starts the process that will asynchronously apply the update and returns its process handle. This method should

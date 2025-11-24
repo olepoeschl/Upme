@@ -9,11 +9,15 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class WebDownloaderTest {
+
+    private static final String BASE_URL = "http://localhost:8080";
 
     private WireMockServer wireMockServer;
 
@@ -33,10 +37,24 @@ public class WebDownloaderTest {
     class DownloadUpdateTest {
         @Test
         void testRegular() throws URISyntaxException, IOException {
+            byte[] expectedFileData = Files.readAllBytes(Paths.get(getClass().getResource("/WebDownloaderTest/regular.txt").toURI()));
+
             stubFor(get(urlEqualTo("/regular.txt"))
                 .willReturn(aResponse()
-                    .withBody(Files.readAllBytes(Paths.get(getClass().getResource("/WebDownloaderTest/regular.txt").toURI())))));
-            // TODO
+                    .withBody(expectedFileData)));
+
+            Path downloadedFile = null;
+            try (
+                WebDownloader downloader = new WebDownloader();
+            ) {
+                downloadedFile = downloader.downloadUpdate(BASE_URL + "/regular.txt", progress -> {});
+                byte[] actualFileData = Files.readAllBytes(downloadedFile);
+
+                assertArrayEquals(expectedFileData, actualFileData, "Actual file data does not match expected file data.");
+            } finally {
+                if(downloadedFile != null)
+                    Files.deleteIfExists(downloadedFile);
+            }
         }
     }
 

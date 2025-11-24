@@ -1,5 +1,6 @@
 package com.olepoeschl.upme;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
@@ -23,6 +24,6 @@ public interface UpdateDownloader {
      *
      * @since 1.0
      */
-    Path downloadUpdate(String downloadUrl, Consumer<Float> progressCallback);
+    Path downloadUpdate(String downloadUrl, Consumer<Float> progressCallback) throws IOException;
 
 }

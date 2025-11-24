@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class WebResolverTest {
 
+    private static final String BASE_URL = "http://localhost:8080";
+
     private WireMockServer wireMockServer;
 
     @BeforeEach
@@ -53,7 +55,7 @@ public class WebResolverTest {
             expected[0] = new Version("1.0.1", "http://example.com/download/1.0.1", null, null);
             expected[1] = new Version("1.0.2", "http://example.com/download/1.0.2", "Bug fixes", "123def");
 
-            var resolver = new WebResolver("http://127.0.0.1:8080" + url);
+            var resolver = new WebResolver(BASE_URL + url);
             var updates = resolver.checkAvailableUpdates("1.0.0");
 
             assertEquals(expected.length, updates.length, "Expected two updates, got " + updates.length);
@@ -63,7 +65,7 @@ public class WebResolverTest {
 
         @Test
         void testServerNotReachable() {
-            var resolver = new WebResolver("http://127.0.0.1:8080/this/url/does/not/exist");
+            var resolver = new WebResolver(BASE_URL + "/this/url/does/not/exist");
             assertThrows(IOException.class, () -> resolver.checkAvailableUpdates("1.0.0"),
                 "Expected IOException when server is not reachable");
         }
@@ -76,7 +78,7 @@ public class WebResolverTest {
                     .withHeader("Content-Type", "application/json")
                     .withBody("This is not valid JSON")));
 
-            var resolver = new WebResolver("http://127.0.0.1:8080" + url);
+            var resolver = new WebResolver(BASE_URL + url);
             assertThrows(IOException.class, () -> resolver.checkAvailableUpdates("1.0.0"),
                 "Expected IOException when server returns invalid JSON");
         }
