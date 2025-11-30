@@ -18,7 +18,9 @@ public class WebDownloader implements UpdateDownloader, AutoCloseable {
     private final HttpClient client;
 
     public WebDownloader() {
-        client = HttpClient.newHttpClient();
+        client = HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.NORMAL)
+            .build();
     }
 
     @Override

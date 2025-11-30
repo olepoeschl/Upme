@@ -58,8 +58,8 @@ public class GithubResolver implements UpdateResolver {
             try (HttpClient client = HttpClient.newHttpClient()) {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 if(response.statusCode() < 200 || response.statusCode() > 299)
-                    throw new IOException("could not fetch available updates form Github: status code "
-                        + response.statusCode() + ": " + response.body());
+                    throw new IOException("get request failed: status code "
+                        + response.statusCode() + response.body());
 
                 var rootNode = mapper.readTree(response.body());
                 if(rootNode instanceof ArrayNode) {
