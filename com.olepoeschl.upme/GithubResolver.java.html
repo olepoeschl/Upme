@@ -58,8 +58,8 @@ public class GithubResolver implements UpdateResolver {
 <span class="fc" id="L58">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
 <span class="fc" id="L59">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
 <span class="pc bpc" id="L60" title="1 of 4 branches missed.">                if(response.statusCode() &lt; 200 || response.statusCode() &gt; 299)</span>
-<span class="fc" id="L61">                    throw new IOException(&quot;could not fetch available updates form Github: status code &quot;</span>
-<span class="fc" id="L62">                        + response.statusCode() + &quot;: &quot; + response.body());</span>
+<span class="fc" id="L61">                    throw new IOException(&quot;get request failed: status code &quot;</span>
+<span class="fc" id="L62">                        + response.statusCode() + response.body());</span>
 
 <span class="fc" id="L64">                var rootNode = mapper.readTree(response.body());</span>
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>

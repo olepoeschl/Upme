@@ -18,55 +18,57 @@ public class WebDownloader implements UpdateDownloader, AutoCloseable {
     private final HttpClient client;
 
 <span class="fc" id="L20">    public WebDownloader() {</span>
-<span class="fc" id="L21">        client = HttpClient.newHttpClient();</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L21">        client = HttpClient.newBuilder()</span>
+<span class="fc" id="L22">            .followRedirects(HttpClient.Redirect.NORMAL)</span>
+<span class="fc" id="L23">            .build();</span>
+<span class="fc" id="L24">    }</span>
 
     @Override
     public Path downloadUpdate(String downloadUrl, Consumer&lt;Float&gt; progressCallback) throws IOException {
-<span class="fc" id="L26">        Path updateFilePath = Files.createTempFile(&quot;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L28">        Path updateFilePath = Files.createTempFile(&quot;&quot;, &quot;&quot;);</span>
 
-<span class="fc" id="L28">        URI uri = URI.create(downloadUrl);</span>
-<span class="fc" id="L29">        HttpRequest req = HttpRequest.newBuilder()</span>
-<span class="fc" id="L30">            .uri(uri)</span>
-<span class="fc" id="L31">            .timeout(Duration.ofMillis(10_000))</span>
-<span class="fc" id="L32">            .GET()</span>
-<span class="fc" id="L33">            .build();</span>
+<span class="fc" id="L30">        URI uri = URI.create(downloadUrl);</span>
+<span class="fc" id="L31">        HttpRequest req = HttpRequest.newBuilder()</span>
+<span class="fc" id="L32">            .uri(uri)</span>
+<span class="fc" id="L33">            .timeout(Duration.ofMillis(10_000))</span>
+<span class="fc" id="L34">            .GET()</span>
+<span class="fc" id="L35">            .build();</span>
 
-<span class="fc" id="L35">        HttpResponse.BodyHandler&lt;InputStream&gt; handler = HttpResponse.BodyHandlers.ofInputStream();</span>
+<span class="fc" id="L37">        HttpResponse.BodyHandler&lt;InputStream&gt; handler = HttpResponse.BodyHandlers.ofInputStream();</span>
         HttpResponse&lt;InputStream&gt; response;
         try {
-<span class="fc" id="L38">            response = client.send(req, handler);</span>
-<span class="nc" id="L39">        } catch (InterruptedException e) {</span>
-<span class="nc" id="L40">            throw new RuntimeException(&quot;Could not download update: interrupted while sending http download request&quot;, e);</span>
-<span class="fc" id="L41">        }</span>
+<span class="fc" id="L40">            response = client.send(req, handler);</span>
+<span class="nc" id="L41">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L42">            throw new RuntimeException(&quot;Could not download update: interrupted while sending http download request&quot;, e);</span>
+<span class="fc" id="L43">        }</span>
 
-<span class="fc" id="L43">        HttpHeaders headers = response.headers();</span>
-<span class="fc" id="L44">        long contentLength = headers.firstValueAsLong(&quot;Content-Length&quot;).orElse(-1L);</span>
+<span class="fc" id="L45">        HttpHeaders headers = response.headers();</span>
+<span class="fc" id="L46">        long contentLength = headers.firstValueAsLong(&quot;Content-Length&quot;).orElse(-1L);</span>
 
         try (
-<span class="fc" id="L47">            InputStream is = response.body();</span>
-<span class="fc" id="L48">            FileOutputStream fos = new FileOutputStream(updateFilePath.toFile());</span>
+<span class="fc" id="L49">            InputStream is = response.body();</span>
+<span class="fc" id="L50">            FileOutputStream fos = new FileOutputStream(updateFilePath.toFile());</span>
         ) {
-<span class="fc" id="L50">            byte[] buffer = new byte[4096];</span>
-<span class="fc" id="L51">            long totalBytesDownloaded = 0L;</span>
+<span class="fc" id="L52">            byte[] buffer = new byte[4096];</span>
+<span class="fc" id="L53">            long totalBytesDownloaded = 0L;</span>
             int bytesDownloaded;
 
-<span class="fc bfc" id="L54" title="All 2 branches covered.">            while((bytesDownloaded = is.read(buffer)) != -1) {</span>
-<span class="fc" id="L55">                totalBytesDownloaded += bytesDownloaded;</span>
-<span class="fc" id="L56">                fos.write(buffer, 0, bytesDownloaded);</span>
-<span class="pc bpc" id="L57" title="1 of 4 branches missed.">                if(progressCallback != null &amp;&amp; contentLength &gt; 0)</span>
-<span class="fc" id="L58">                    progressCallback.accept((float) totalBytesDownloaded / contentLength);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            while((bytesDownloaded = is.read(buffer)) != -1) {</span>
+<span class="fc" id="L57">                totalBytesDownloaded += bytesDownloaded;</span>
+<span class="fc" id="L58">                fos.write(buffer, 0, bytesDownloaded);</span>
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">                if(progressCallback != null &amp;&amp; contentLength &gt; 0)</span>
+<span class="fc" id="L60">                    progressCallback.accept((float) totalBytesDownloaded / contentLength);</span>
             }
-<span class="nc" id="L60">        } catch (IOException e) {</span>
-<span class="nc" id="L61">            throw new IOException(&quot;Could not download update: I/O error while downloading file&quot;, e);</span>
-<span class="fc" id="L62">        }</span>
+<span class="nc" id="L62">        } catch (IOException e) {</span>
+<span class="nc" id="L63">            throw new IOException(&quot;Could not download update: I/O error while downloading file&quot;, e);</span>
+<span class="fc" id="L64">        }</span>
 
-<span class="fc" id="L64">        return updateFilePath;</span>
+<span class="fc" id="L66">        return updateFilePath;</span>
     }
 
     @Override
     public void close() throws IOException {
-<span class="fc" id="L69">        client.close();</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L71">        client.close();</span>
+<span class="fc" id="L72">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
