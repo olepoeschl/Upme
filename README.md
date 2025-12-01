@@ -29,6 +29,7 @@ __Upme__ will be a library for adding self-update capabilities to Java desktop a
 ## Features
 - [x] fetch updates from custom web server
 - [x] fetch updates from Github Releases
+- [ ] show progress
 - [ ] high-level wrapper for the average use-case of simply updating to the latest version
 - [ ] automatically restart after the update
 - [ ] rollback on error
