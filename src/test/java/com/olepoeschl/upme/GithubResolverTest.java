@@ -2,6 +2,7 @@ package com.olepoeschl.upme;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -54,6 +55,18 @@ public class GithubResolverTest {
         var resolver = new GithubResolver("some_owner", "some_repo", "some_file_pattern");
         for(var entry : expectedHeaders.entrySet())
             resolver.addHeader(entry.getKey(), entry.getValue());
+
+        Map<String, String> gotHeaders = resolver.getHeaders();
+        assertEquals(expectedHeaders, gotHeaders);
+    }
+
+    @Test
+    void addGithubAuthToken() {
+        String token = "xyz_123_abc456lmn789";
+        var expectedHeaders = ImmutableMap.of("Authorization", "Bearer " + token);
+
+        var resolver = new GithubResolver("some_owner", "some_repo", "some_file_pattern");
+        resolver.setGithubAuthToken(token);
 
         Map<String, String> gotHeaders = resolver.getHeaders();
         assertEquals(expectedHeaders, gotHeaders);

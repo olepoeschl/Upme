@@ -40,6 +40,10 @@ public class GithubResolver implements UpdateResolver {
         headers.put(key, value);
     }
 
+    public void setGithubAuthToken(String token) {
+        addHeader("Authorization", "Bearer " + token);
+    }
+
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
         var currentSemver = Semver.parse(currentVersionString);
