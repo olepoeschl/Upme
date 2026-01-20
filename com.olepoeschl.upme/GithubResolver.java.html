@@ -40,61 +40,65 @@ public class GithubResolver implements UpdateResolver {
 <span class="fc" id="L40">        headers.put(key, value);</span>
 <span class="fc" id="L41">    }</span>
 
+    public void setGithubAuthToken(String token) {
+<span class="fc" id="L44">        addHeader(&quot;Authorization&quot;, &quot;Bearer &quot; + token);</span>
+<span class="fc" id="L45">    }</span>
+
     @Override
     public Version[] checkAvailableUpdates(String currentVersionString) throws IOException {
-<span class="fc" id="L45">        var currentSemver = Semver.parse(currentVersionString);</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(currentSemver == null)</span>
-<span class="fc" id="L47">            throw new IllegalArgumentException(&quot;not a valid semantic versioning string: &quot; + currentVersionString);</span>
+<span class="fc" id="L49">        var currentSemver = Semver.parse(currentVersionString);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if(currentSemver == null)</span>
+<span class="fc" id="L51">            throw new IllegalArgumentException(&quot;not a valid semantic versioning string: &quot; + currentVersionString);</span>
 
-<span class="fc" id="L49">        final List&lt;Version&gt; versions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">        final List&lt;Version&gt; versions = new ArrayList&lt;&gt;();</span>
         try {
-<span class="fc" id="L51">            var reqBuilder = HttpRequest.newBuilder()</span>
-<span class="fc" id="L52">                .uri(URI.create(releasesUrl))</span>
-<span class="fc" id="L53">                .GET();</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">            for(var header : headers.entrySet())</span>
-<span class="fc" id="L55">                reqBuilder.header(header.getKey(), header.getValue());</span>
-<span class="fc" id="L56">            HttpRequest request = reqBuilder.build();</span>
+<span class="fc" id="L55">            var reqBuilder = HttpRequest.newBuilder()</span>
+<span class="fc" id="L56">                .uri(URI.create(releasesUrl))</span>
+<span class="fc" id="L57">                .GET();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            for(var header : headers.entrySet())</span>
+<span class="fc" id="L59">                reqBuilder.header(header.getKey(), header.getValue());</span>
+<span class="fc" id="L60">            HttpRequest request = reqBuilder.build();</span>
 
-<span class="fc" id="L58">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
-<span class="fc" id="L59">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
-<span class="pc bpc" id="L60" title="1 of 4 branches missed.">                if(response.statusCode() &lt; 200 || response.statusCode() &gt; 299)</span>
-<span class="fc" id="L61">                    throw new IOException(&quot;get request failed: status code &quot;</span>
-<span class="fc" id="L62">                        + response.statusCode() + response.body());</span>
+<span class="fc" id="L62">            try (HttpClient client = HttpClient.newHttpClient()) {</span>
+<span class="fc" id="L63">                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());</span>
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">                if(response.statusCode() &lt; 200 || response.statusCode() &gt; 299)</span>
+<span class="fc" id="L65">                    throw new IOException(&quot;get request failed: status code &quot;</span>
+<span class="fc" id="L66">                        + response.statusCode() + response.body());</span>
 
-<span class="fc" id="L64">                var rootNode = mapper.readTree(response.body());</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>
-<span class="fc" id="L66">                    rootNode.forEach(releaseNode -&gt; {</span>
-<span class="fc" id="L67">                        var versionString = releaseNode.get(&quot;tag_name&quot;).asText();</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">                        if(currentSemver.isGreaterThanOrEqualTo(versionString))</span>
-<span class="fc" id="L69">                            return;</span>
+<span class="fc" id="L68">                var rootNode = mapper.readTree(response.body());</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">                if(rootNode instanceof ArrayNode) {</span>
+<span class="fc" id="L70">                    rootNode.forEach(releaseNode -&gt; {</span>
+<span class="fc" id="L71">                        var versionString = releaseNode.get(&quot;tag_name&quot;).asText();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                        if(currentSemver.isGreaterThanOrEqualTo(versionString))</span>
+<span class="fc" id="L73">                            return;</span>
 
                         // check if the release has an asset that matches the updateFileAssetPattern
-<span class="fc" id="L72">                        String updateAssetDownloadUrl = null; // null means there is no matching asset</span>
-<span class="fc" id="L73">                        String checksum = null;</span>
+<span class="fc" id="L76">                        String updateAssetDownloadUrl = null; // null means there is no matching asset</span>
+<span class="fc" id="L77">                        String checksum = null;</span>
 
-<span class="fc" id="L75">                        var assetsNode = releaseNode.get(&quot;assets&quot;);</span>
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                        if(assetsNode instanceof ArrayNode) {</span>
-<span class="pc bfc" id="L77" title="All 2 branches covered.">                            for(int i = 0; i &lt; assetsNode.size(); i++) {</span>
-<span class="fc" id="L78">                                var asset = assetsNode.get(i);</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                                if(asset.get(&quot;name&quot;).asText().equals(updateFileAssetPattern)) {</span>
-<span class="fc" id="L80">                                    updateAssetDownloadUrl = asset.get(&quot;browser_download_url&quot;).asText();</span>
-<span class="fc" id="L81">                                    checksum = asset.get(&quot;digest&quot;).asText().substring(7); // always begins with &quot;sha256:&quot;</span>
-<span class="fc" id="L82">                                    break;</span>
+<span class="fc" id="L79">                        var assetsNode = releaseNode.get(&quot;assets&quot;);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">                        if(assetsNode instanceof ArrayNode) {</span>
+<span class="pc bfc" id="L81" title="All 2 branches covered.">                            for(int i = 0; i &lt; assetsNode.size(); i++) {</span>
+<span class="fc" id="L82">                                var asset = assetsNode.get(i);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                                if(asset.get(&quot;name&quot;).asText().equals(updateFileAssetPattern)) {</span>
+<span class="fc" id="L84">                                    updateAssetDownloadUrl = asset.get(&quot;browser_download_url&quot;).asText();</span>
+<span class="fc" id="L85">                                    checksum = asset.get(&quot;digest&quot;).asText().substring(7); // always begins with &quot;sha256:&quot;</span>
+<span class="fc" id="L86">                                    break;</span>
                                 }
                             }
                         }
                         // if a matching asset was found, add this version to the list
-<span class="fc bfc" id="L87" title="All 2 branches covered.">                        if(updateAssetDownloadUrl != null) {</span>
-<span class="fc" id="L88">                            var description = releaseNode.get(&quot;body&quot;).asText();</span>
-<span class="fc" id="L89">                            versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                        if(updateAssetDownloadUrl != null) {</span>
+<span class="fc" id="L92">                            var description = releaseNode.get(&quot;body&quot;).asText();</span>
+<span class="fc" id="L93">                            versions.add(new Version(versionString, updateAssetDownloadUrl, description, checksum));</span>
                         }
-<span class="fc" id="L91">                    });</span>
+<span class="fc" id="L95">                    });</span>
                 }
 
-<span class="fc" id="L94">                return versions.toArray(Version[]::new);</span>
+<span class="fc" id="L98">                return versions.toArray(Version[]::new);</span>
             }
-<span class="fc" id="L96">        } catch (Exception e) {</span>
-<span class="fc" id="L97">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L100">        } catch (Exception e) {</span>
+<span class="fc" id="L101">            throw new IOException(&quot;could not fetch available updates from Github: &quot; + e.getMessage(), e);</span>
         }
     }
 
