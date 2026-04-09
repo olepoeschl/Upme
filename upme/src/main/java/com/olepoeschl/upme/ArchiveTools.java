@@ -4,12 +4,14 @@ import java.nio.file.Path;
 import java.util.function.Consumer;
 
 /**
- * Interface for unpacking an archive into a temporary directory.
+ * Interface defining methods for interacting with archive files.
+ *
+ * Used by {@link ArchiveBasedUpdater} for checking the checksum of an archive file and unpacking it.
  *
  * @see ArchiveBasedUpdater
  * @since 1.0
  */
-public interface ArchiveUnpacker {
+public interface ArchiveTools {
 
     /**
      * Unpacks the archive located at the specified path to a temporary directory.
@@ -23,4 +25,6 @@ public interface ArchiveUnpacker {
      */
     Path unpack(Path pathToArchive, Consumer<Float> progressCallback);
 
+    // TODO: javadocs
+    String calculateChecksumOfFile(Path updateArchive);
 }

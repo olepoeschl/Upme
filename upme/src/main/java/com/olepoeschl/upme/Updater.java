@@ -37,7 +37,7 @@ public interface Updater {
      * @param progressCallback a callback function that receives progress updates as a float value between 0.0 and 1.0
      *
      * @see UpdateDownloader#downloadUpdate(String, Consumer)
-     * @see ArchiveUnpacker#unpack(Path, Consumer)
+     * @see ArchiveTools#unpack(Path, Consumer)
      * @since 1.0
      */
     void prepareUpdate(Version version, Consumer<Float> progressCallback) throws IOException;
