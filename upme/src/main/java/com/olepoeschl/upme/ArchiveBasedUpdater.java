@@ -4,6 +4,8 @@ import org.jspecify.annotations.NullMarked;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -36,9 +38,16 @@ public class ArchiveBasedUpdater implements Updater {
             Path updateArchive = downloader.downloadUpdate(version.downloadUrl(), downloadProgress -> progressCallback.accept(downloadProgress * 0.5f));
 
             if(version.checksum() != null) { // if checksum is given, verify it
-                String calculatedChecksum = archiveTools.calculateChecksumOfFile(updateArchive);
-                if(!calculatedChecksum.equals(version.checksum()))
-                    throw new SecurityException("Checksum of downloaded file does not match expected checksum.");
+                try {
+                    String calculatedChecksum = archiveTools.calculateChecksumOfFile(updateArchive, MessageDigest.getInstance("SHA-256"));
+                    if (!calculatedChecksum.equals(version.checksum()))
+                        throw new SecurityException("Checksum of downloaded file does not match expected checksum.");
+                } catch (IOException e) {
+                    throw new IOException("Could not compute checksum of downloaded archive file '" + updateArchive.getFileName() + "': " + e.getMessage(), e);
+                } catch (NoSuchAlgorithmException e) {
+                    // will never happen, because SHA-256 is supported on all platforms and MessageDigest implementations
+                    throw new RuntimeException(e);
+                }
             }
 
             Path updateDir = archiveTools.unpack(updateArchive, unpackProgress -> progressCallback.accept(unpackProgress * 0.5f + 0.5f));
